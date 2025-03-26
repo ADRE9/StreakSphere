@@ -10,7 +10,7 @@ import {
   View,
 } from '@/components/ui';
 import { useIsFirstTime } from '@/lib/hooks';
-export default function Onboarding() {
+export default function OnboardingScreen() {
   const [_, setIsFirstTime] = useIsFirstTime();
   const router = useRouter();
   return (
@@ -45,7 +45,7 @@ export default function Onboarding() {
           label="Let's Get Started "
           onPress={() => {
             setIsFirstTime(false);
-            router.replace('/login');
+            router.replace('/(auth)/');
           }}
         />
       </SafeAreaView>

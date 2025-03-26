@@ -15,5 +15,5 @@ export function useSession() {
     });
   }, []);
 
-  return session;
+  return { session };
 }
