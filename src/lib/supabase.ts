@@ -3,8 +3,9 @@ import 'react-native-url-polyfill/auto';
 import { createClient } from '@supabase/supabase-js';
 import * as aesjs from 'aes-js';
 import * as SecureStore from 'expo-secure-store';
+import { AppState } from 'react-native';
 
-import { storage } from './storage';
+import { type Database } from '@/types/database';
 
 // As Expo's SecureStore does not support values larger than 2048
 // bytes, an AES-256 key is generated and stored in SecureStore, while
@@ -43,7 +44,7 @@ class LargeSecureStore {
   }
 
   async getItem(key: string) {
-    const encrypted = storage.getString(key) ?? null;
+    const encrypted = await SecureStore.getItemAsync(key);
     if (!encrypted) {
       return encrypted;
     }
@@ -52,25 +53,37 @@ class LargeSecureStore {
   }
 
   async removeItem(key: string) {
-    storage.delete(key);
     await SecureStore.deleteItemAsync(key);
   }
 
   async setItem(key: string, value: string) {
     const encrypted = await this._encrypt(key, value);
-
-    storage.set(key, encrypted);
+    await SecureStore.setItemAsync(key, encrypted);
   }
 }
 
-const supabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL!;
-const supabaseAnonKey = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY!;
+const supabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL;
+const supabaseAnonKey = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY;
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+if (!supabaseUrl || !supabaseAnonKey) {
+  throw new Error('Missing Supabase environment variables');
+}
+
+const storage = new LargeSecureStore();
+
+export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey, {
   auth: {
-    storage: new LargeSecureStore(),
+    storage,
     autoRefreshToken: true,
     persistSession: true,
     detectSessionInUrl: false,
   },
+});
+
+AppState.addEventListener('change', (state) => {
+  if (state === 'active') {
+    supabase.auth.startAutoRefresh();
+  } else {
+    supabase.auth.stopAutoRefresh();
+  }
 });
