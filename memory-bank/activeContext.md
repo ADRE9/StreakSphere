@@ -2,48 +2,54 @@
 
 ## Current Focus
 
-Initial project setup and core infrastructure implementation
+Implementing local-first data management with Supabase and Legend State
 
 ## Recent Changes
 
-- Created Memory Bank documentation
-- Established project structure
-- Defined technical requirements and constraints
+- Created database schema for habits and check-ins
+- Implemented Row Level Security policies
+- Set up Legend State with MMKV storage
+- Created TypeScript types for database schema
+- Implemented local-first data operations
 
 ## Active Decisions
 
-1. Project Structure
+1. Database Structure
 
-   - Using file-based routing with Expo Router
-   - Implementing Nativewind for styling
-   - Setting up MMKV for local storage
+   - Using UUID for primary keys
+   - Implementing soft deletes
+   - Adding proper indexes
+   - Setting up RLS policies
 
-2. Development Priorities
-   - Core infrastructure setup
-   - Basic UI components
-   - Navigation structure
-   - State management implementation
+2. Local-First Implementation
+   - Using Legend State for reactivity
+   - MMKV for persistence
+   - Real-time sync with Supabase
+   - Offline queue management
 
 ## Next Steps
 
 ### Immediate Tasks
 
-1. Initialize Expo project
+1. Database Setup
 
-   - Set up TypeScript configuration
-   - Configure Nativewind
-   - Install core dependencies
+   - Create Supabase project
+   - Run migrations
+   - Set up environment variables
+   - Test RLS policies
 
-2. Create Basic Structure
+2. Local Storage Implementation
 
-   - Set up directory structure
-   - Create initial UI components
-   - Implement basic navigation
+   - Test MMKV storage
+   - Verify offline operations
+   - Implement sync logic
+   - Add error handling
 
-3. Setup Development Environment
-   - Configure ESLint and Prettier
-   - Set up testing infrastructure
-   - Initialize version control
+3. UI Development
+   - Create habit list component
+   - Implement habit creation
+   - Add check-in functionality
+   - Design streak visualization
 
 ### Upcoming Features
 
@@ -52,41 +58,47 @@ Initial project setup and core infrastructure implementation
    - Habit creation and management
    - Streak tracking system
    - Progress visualization
+   - Offline support
 
 2. UI/UX Implementation
 
    - Design system setup
    - Component library
    - Animation system
+   - Loading states
 
 3. Data Management
    - Local storage setup
-   - State management
-   - Offline capabilities
+   - Sync implementation
+   - Conflict resolution
+   - Error handling
 
 ## Current Considerations
 
 ### Technical
 
 - Ensuring proper TypeScript configuration
-- Optimizing performance from the start
-- Maintaining code quality standards
+- Optimizing sync performance
+- Handling offline scenarios
+- Managing data conflicts
 
 ### Product
 
 - User experience flow
 - Habit tracking mechanics
 - Engagement features
+- Data visualization
 
 ### Development
 
 - Code review process
 - Testing strategy
 - Documentation standards
+- Performance monitoring
 
 ## Open Questions
 
-- Specific animation requirements for UI interactions
-- Data synchronization strategy
-- Error handling approach
-- Performance monitoring tools
+- Specific sync conflict resolution strategy
+- Offline data retention policy
+- Performance optimization for large datasets
+- Error recovery procedures

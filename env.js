@@ -39,7 +39,7 @@ const PACKAGE = 'com.streaksphere'; // android package name
 const NAME = 'StreakSphere'; // app name
 const EXPO_ACCOUNT_OWNER = 'adre9'; // expo account owner
 const EAS_PROJECT_ID = 'c3e1075b-6fe7-4686-aa49-35b46a229044'; // eas project id
-const SCHEME = 'StreakSphere'; // app scheme
+const SCHEME = 'com.streaksphere'; // app scheme
 
 /**
  * We declare a function withEnvSuffix that will add a suffix to the variable name based on the APP_ENV
@@ -82,6 +82,8 @@ const client = z.object({
   API_URL: z.string(),
   VAR_NUMBER: z.number(),
   VAR_BOOL: z.boolean(),
+  EXPO_PUBLIC_SUPABASE_URL: z.string().min(1),
+  EXPO_PUBLIC_SUPABASE_ANON_KEY: z.string().min(1),
 });
 
 const buildTime = z.object({
@@ -106,6 +108,8 @@ const _clientEnv = {
   API_URL: process.env.API_URL,
   VAR_NUMBER: Number(process.env.VAR_NUMBER),
   VAR_BOOL: process.env.VAR_BOOL === 'true',
+  EXPO_PUBLIC_SUPABASE_URL: process.env.EXPO_PUBLIC_SUPABASE_URL,
+  EXPO_PUBLIC_SUPABASE_ANON_KEY: process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY,
 };
 
 /**

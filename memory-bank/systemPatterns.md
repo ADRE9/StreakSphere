@@ -11,8 +11,10 @@ src/
 ├── components/   # Reusable UI components
 │   └── ui/      # Core UI components
 ├── lib/          # Shared utilities and hooks
+│   └── habits.ts # Habits data management
 ├── translations/ # i18n resources
 └── types/        # TypeScript definitions
+    └── database.ts # Database types
 ```
 
 ## Design Patterns
@@ -27,26 +29,25 @@ src/
 
 ### State Management
 
-- Zustand for global state
-- React Query for server state
-- Local component state with useState
+- Legend State for local-first data management
 - MMKV for persistent storage
+- Supabase for remote sync
+- Local component state with useState
 
 ### Data Flow
 
-1. API Layer
+1. Local Storage Layer
 
-   - React Query for data fetching
-   - Axios for HTTP requests
-   - Type-safe API responses
-   - Error handling middleware
+   - MMKV for high-performance storage
+   - Legend State observables for reactivity
+   - Automatic persistence
 
-2. State Layer
+2. Sync Layer
 
-   - Zustand stores for global state
-   - React Query cache for server data
-   - Local storage for offline data
-   - State hydration on app launch
+   - Supabase for remote storage
+   - Real-time updates
+   - Conflict resolution
+   - Offline queue management
 
 3. UI Layer
    - Nativewind for styling
@@ -55,6 +56,37 @@ src/
    - Animations
 
 ## Technical Decisions
+
+### Database Schema
+
+1. Habits Table
+
+   ```sql
+   CREATE TABLE habits (
+     id UUID PRIMARY KEY,
+     title TEXT NOT NULL,
+     description TEXT,
+     streak_count INTEGER DEFAULT 0,
+     last_checked_in TIMESTAMP WITH TIME ZONE,
+     user_id UUID REFERENCES auth.users(id)
+   );
+   ```
+
+2. Check-ins Table
+   ```sql
+   CREATE TABLE check_ins (
+     id UUID PRIMARY KEY,
+     habit_id UUID REFERENCES habits(id),
+     checked_at TIMESTAMP WITH TIME ZONE
+   );
+   ```
+
+### Security
+
+- Row Level Security (RLS) policies
+- User-specific data access
+- Secure authentication
+- Data validation
 
 ### Styling
 
