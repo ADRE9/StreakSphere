@@ -9,6 +9,7 @@ import { useIsFirstTime } from '@/lib/hooks/use-is-first-time';
 export default function TabLayout() {
   const [isFirstTime] = useIsFirstTime();
   const { status, session } = useAuthStore();
+
   if (isFirstTime) {
     console.log('redirecting to onboarding');
     return <Redirect href="/(auth)/onboarding" />;

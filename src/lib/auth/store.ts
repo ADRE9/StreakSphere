@@ -17,9 +17,9 @@ export interface AuthState {
 }
 
 const handleAuthError = (error: unknown, defaultMessage: string) => {
-  console.error('Auth error:', error);
-  showErrorToast(error instanceof Error ? error.message : defaultMessage);
-  throw error;
+  const errorMessage = error instanceof Error ? error.message : defaultMessage;
+  showErrorToast(errorMessage);
+  return Promise.reject(new Error(errorMessage));
 };
 
 const handleSignIn = async (email: string, password: string, set: any) => {
@@ -32,7 +32,7 @@ const handleSignIn = async (email: string, password: string, set: any) => {
     set({ session: data.session, status: 'signIn' });
     showSuccessToast('Successfully signed in');
   } catch (error) {
-    handleAuthError(error, 'Failed to sign in');
+    return handleAuthError(error, 'Failed to sign in');
   }
 };
 
@@ -45,11 +45,10 @@ const handleSignUp = async (email: string, password: string, set: any) => {
     if (error) throw error;
     set({ session: data.session, status: 'signIn' });
     showSuccessToast(
-      'Account created successfully',
-      'Please check your email for verification'
+      'Account created successfully. Please check your email for verification'
     );
   } catch (error) {
-    handleAuthError(error, 'Failed to sign up');
+    return handleAuthError(error, 'Failed to sign up');
   }
 };
 
@@ -60,7 +59,7 @@ const handleSignOut = async (set: any) => {
     set({ session: null, status: 'signOut', isEmailVerified: false });
     showSuccessToast('Successfully signed out');
   } catch (error) {
-    handleAuthError(error, 'Failed to sign out');
+    return handleAuthError(error, 'Failed to sign out');
   }
 };
 
@@ -71,7 +70,7 @@ const handleCheckEmailVerification = async (set: any) => {
     } = await supabase.auth.getUser();
     set({ isEmailVerified: user?.email_confirmed_at !== null });
   } catch (error) {
-    handleAuthError(error, 'Failed to check email verification status');
+    return handleAuthError(error, 'Failed to check email verification status');
   }
 };
 
@@ -88,9 +87,9 @@ const handleResendVerificationEmail = async () => {
       email: user.email,
     });
     if (error) throw error;
-    showSuccessToast('Verification email sent', 'Please check your inbox');
+    showSuccessToast('Verification email sent. Please check your inbox');
   } catch (error) {
-    handleAuthError(error, 'Failed to resend verification email');
+    return handleAuthError(error, 'Failed to resend verification email');
   }
 };
 

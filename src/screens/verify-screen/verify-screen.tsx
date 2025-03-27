@@ -7,18 +7,14 @@ import { useAuthStore } from '@/lib/auth/store';
 
 export default function VerifyScreen() {
   const [isLoading, setIsLoading] = useState(false);
-  const { isEmailVerified, checkEmailVerification, resendVerificationEmail } =
-    useAuthStore();
+  const { isEmailVerified, resendVerificationEmail } = useAuthStore();
 
+  // Monitor verification status and redirect when verified
   useEffect(() => {
-    const checkVerification = async () => {
-      await checkEmailVerification();
-      if (isEmailVerified) {
-        router.replace('/(app)' as any);
-      }
-    };
-    checkVerification();
-  }, [checkEmailVerification, isEmailVerified]);
+    if (isEmailVerified) {
+      router.replace('/(app)');
+    }
+  }, [isEmailVerified]);
 
   const handleResendEmail = async () => {
     setIsLoading(true);
@@ -50,7 +46,7 @@ export default function VerifyScreen() {
       <Button
         className="mt-4 w-full"
         variant="outline"
-        onPress={() => router.replace('/sign-in' as any)}
+        onPress={() => router.replace('/(auth)/sign-in')}
       >
         <Text>Back to Sign In</Text>
       </Button>

@@ -22,7 +22,7 @@ export default function SignInScreen() {
         <Text className="text-neutral-500">Don't have an account? </Text>
         <Text
           className="text-primary-500"
-          onPress={() => router.push('/sign-up' as any)}
+          onPress={() => router.push('/(auth)/sign-up')}
         >
           Sign Up
         </Text>

@@ -8,25 +8,41 @@ interface ToastOptions {
   type?: ToastType;
 }
 
-export function showToast({ title, message, type = 'info' }: ToastOptions) {
+export function showToast({
+  title = 'Error',
+  message,
+  type = 'error',
+}: ToastOptions) {
   Toast.show({
     type,
     text1: title,
     text2: message,
-    position: 'bottom',
+    position: 'top',
     visibilityTime: 4000,
     autoHide: true,
   });
 }
 
-export function showSuccessToast(message: string, title?: string) {
-  showToast({ title, message, type: 'success' });
+export function showSuccessToast(message: string) {
+  showToast({
+    title: 'Success',
+    message,
+    type: 'success',
+  });
 }
 
-export function showErrorToast(message: string, title?: string) {
-  showToast({ title, message, type: 'error' });
+export function showErrorToast(message: string) {
+  showToast({
+    title: 'Error',
+    message,
+    type: 'error',
+  });
 }
 
-export function showInfoToast(message: string, title?: string) {
-  showToast({ title, message, type: 'info' });
+export function showInfoToast(message: string) {
+  showToast({
+    title: 'Info',
+    message,
+    type: 'info',
+  });
 }

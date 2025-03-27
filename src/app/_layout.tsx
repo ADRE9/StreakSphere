@@ -7,9 +7,9 @@ import { Slot } from 'expo-router';
 import React, { useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import BootSplash from 'react-native-bootsplash';
-import FlashMessage from 'react-native-flash-message';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
+import Toast from 'react-native-toast-message';
 
 import { APIProvider } from '@/api';
 import { loadSelectedTheme, SessionProvider } from '@/lib';
@@ -52,7 +52,7 @@ function Providers({ children }: { children: React.ReactNode }) {
             <APIProvider>
               <BottomSheetModalProvider>
                 {children}
-                <FlashMessage position="top" />
+                <Toast />
               </BottomSheetModalProvider>
             </APIProvider>
           </SessionProvider>

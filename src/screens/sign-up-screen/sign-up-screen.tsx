@@ -10,7 +10,7 @@ export default function SignUpScreen() {
 
   const handleSubmit = async (data: any) => {
     await signUp(data.email, data.password);
-    router.replace('/verify-email' as any);
+    router.replace('/verify-email');
   };
 
   return (
@@ -21,7 +21,7 @@ export default function SignUpScreen() {
         <Text className="text-neutral-500">Already have an account? </Text>
         <Text
           className="text-primary-500"
-          onPress={() => router.push('/sign-in' as any)}
+          onPress={() => router.push('/(auth)/sign-in')}
         >
           Sign In
         </Text>
