@@ -55,7 +55,7 @@ export function AuthForm({ mode, onSubmit }: AuthFormProps) {
     defaultValues: {
       email: '',
       password: '',
-      ...(isSignUp && { confirmPassword: '' }),
+      ...(isSignUp && { name: '', confirmPassword: '' }),
     },
   });
 

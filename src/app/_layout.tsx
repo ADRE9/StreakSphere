@@ -20,7 +20,7 @@ export { ErrorBoundary } from 'expo-router';
 
 loadSelectedTheme();
 
-function RootLayout() {
+export default function RootLayout() {
   useEffect(() => {
     const init = async () => {
       // …do multiple sync or async tasks
@@ -68,5 +68,3 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
-
-export default RootLayout;
