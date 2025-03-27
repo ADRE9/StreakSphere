@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { View } from 'react-native';
 
 import { Button, Text } from '@/components/ui';
-import { useAuthStore } from '@/lib/auth';
+import { useAuthStore } from '@/lib/auth/store';
 
 export default function VerifyScreen() {
   const [isLoading, setIsLoading] = useState(false);

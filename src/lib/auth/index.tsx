@@ -3,8 +3,6 @@ import { type PropsWithChildren, useEffect } from 'react';
 import { supabase } from '../supabase';
 import { useAuthStore } from './store';
 
-export { useAuthStore } from './store';
-
 export function SessionProvider({ children }: PropsWithChildren) {
   const { setStatus } = useAuthStore();
 

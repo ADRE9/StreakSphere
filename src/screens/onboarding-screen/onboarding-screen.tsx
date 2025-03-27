@@ -3,14 +3,14 @@ import { useCallback } from 'react';
 import { View } from 'react-native';
 
 import { Button, Text } from '@/components/ui';
-import { useAuthFlow } from '@/lib/hooks/use-auth-flow';
+import { useIsFirstTime } from '@/lib/hooks/use-is-first-time';
 
 export default function OnboardingScreen() {
-  const { setIsFirstTime } = useAuthFlow();
+  const [_, setIsFirstTime] = useIsFirstTime();
 
   const handleFinish = useCallback(() => {
     setIsFirstTime(false);
-    router.replace('/sign-in' as any);
+    router.replace('/(auth)/sign-in');
   }, [setIsFirstTime]);
 
   return (

@@ -1,7 +1,8 @@
-import { useMMKVBoolean } from 'react-native-mmkv';
+import { MMKV, useMMKVBoolean } from 'react-native-mmkv';
 
-import { storage } from '../storage';
-
+const storage = new MMKV({
+  id: 'is-first-time',
+});
 const IS_FIRST_TIME = 'IS_FIRST_TIME';
 
 export const useIsFirstTime = () => {
