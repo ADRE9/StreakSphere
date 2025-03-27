@@ -1,11 +1,17 @@
 import { router } from 'expo-router';
 import { View } from 'react-native';
 
-import { AuthForm } from '@/components/auth-form';
+import { AuthForm, type SignInFormData } from '@/components/auth-form';
 import { Text } from '@/components/ui';
+import { useAuth } from '@/lib/auth/use-auth';
 
 export default function SignInScreen() {
-  const handleSubmit = async () => {
+  const { signIn } = useAuth();
+  const handleSubmit = async (data: SignInFormData) => {
+    await signIn({
+      email: data.email,
+      password: data.password,
+    });
     router.replace('/(app)');
   };
 

@@ -1,3 +1,4 @@
+/* eslint-disable max-lines-per-function */
 import {
   type AuthResponse,
   type AuthTokenResponsePassword,
@@ -7,6 +8,7 @@ import React, {
   type PropsWithChildren,
   useCallback,
   useContext,
+  useEffect,
   useState,
 } from 'react';
 
@@ -30,6 +32,7 @@ type SignUpProps = {
 type AuthContextType = {
   signIn: (props: SignInProps) => Promise<AuthTokenResponsePassword>;
   signUp: (props: SignUpProps) => Promise<AuthResponse>;
+  signOut: () => void;
 } & AuthState;
 
 const AuthContext = createContext<AuthContextType>({
@@ -37,6 +40,7 @@ const AuthContext = createContext<AuthContextType>({
   token: undefined,
   signIn: () => new Promise(() => ({})),
   signUp: () => new Promise(() => ({})),
+  signOut: () => undefined,
 });
 
 export function useAuth() {
@@ -70,6 +74,11 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     [supabase]
   );
 
+  const signOut = useCallback(async () => {
+    await supabase.auth.signOut();
+    setToken(undefined);
+  }, [supabase]);
+
   const signUp = useCallback(
     async ({ email, password }: SignUpProps) => {
       const result = await supabase.auth.signUp({
@@ -86,6 +95,29 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     [supabase]
   );
 
+  useEffect(() => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((event, session) => {
+      switch (event) {
+        case 'SIGNED_OUT':
+          setToken(undefined);
+          break;
+        case 'INITIAL_SESSION':
+        case 'SIGNED_IN':
+        case 'TOKEN_REFRESHED':
+          setToken(session?.access_token);
+          break;
+        default:
+        // no-op
+      }
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, [supabase]);
+
   return (
     <AuthContext.Provider
       value={{
@@ -93,6 +125,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
         token,
         signIn,
         signUp,
+        signOut,
       }}
     >
       {children}
