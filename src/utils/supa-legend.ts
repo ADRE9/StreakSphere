@@ -1,5 +1,3 @@
-import 'react-native-get-random-values';
-
 import { observable } from '@legendapp/state';
 import { ObservablePersistMMKV } from '@legendapp/state/persist-plugins/mmkv';
 import { configureSynced } from '@legendapp/state/sync';
