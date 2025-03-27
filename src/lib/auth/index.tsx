@@ -1,59 +1,28 @@
-import { createContext, type PropsWithChildren, useState } from 'react';
-import { Alert } from 'react-native';
+import { type PropsWithChildren, useEffect } from 'react';
 
 import { supabase } from '../supabase';
+import { useAuthStore } from './store';
 
-const AuthContext = createContext<{
-  signIn: (email: string, password: string) => void;
-  signUp: (email: string, password: string) => void;
-  setLoading: (loading: boolean) => void;
-  loading: boolean;
-}>({
-  signIn: () => null,
-  signUp: () => null,
-  setLoading: () => null,
-  loading: false,
-});
+export { useAuthStore } from './store';
 
 export function SessionProvider({ children }: PropsWithChildren) {
-  const [loading, setLoading] = useState(false);
+  const { setStatus } = useAuthStore();
 
-  async function signInWithEmail(email: string, password: string) {
-    setLoading(true);
-    const { error } = await supabase.auth.signInWithPassword({
-      email: email,
-      password: password,
+  useEffect(() => {
+    // Get initial session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setStatus(session ? 'signIn' : 'signOut');
     });
-    if (error) Alert.alert(error.message);
-    setLoading(false);
-  }
 
-  async function signUpWithEmail(email: string, password: string) {
-    setLoading(true);
+    // Listen for auth changes
     const {
-      data: { session },
-      error,
-    } = await supabase.auth.signUp({
-      email: email,
-      password: password,
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setStatus(session ? 'signIn' : 'signOut');
     });
-    if (error) Alert.alert(error.message);
-    if (!session)
-      Alert.alert('Please check your inbox for email verification!');
-    setLoading(false);
-  }
-  return (
-    <AuthContext.Provider
-      value={{
-        signIn: (email: string, password: string) =>
-          signInWithEmail(email, password),
-        signUp: (email: string, password: string) =>
-          signUpWithEmail(email, password),
-        setLoading,
-        loading,
-      }}
-    >
-      {children}
-    </AuthContext.Provider>
-  );
+
+    return () => subscription.unsubscribe();
+  }, [setStatus]);
+
+  return children;
 }

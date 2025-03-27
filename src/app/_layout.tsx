@@ -17,10 +17,6 @@ import { useThemeConfig } from '@/lib/use-theme-config';
 
 export { ErrorBoundary } from 'expo-router';
 
-export const unstable_settings = {
-  initialRouteName: '(app)',
-};
-
 loadSelectedTheme();
 
 export default function RootLayout() {
@@ -34,6 +30,7 @@ export default function RootLayout() {
       console.log('BootSplash has been hidden successfully');
     });
   }, []);
+
   return (
     <Providers>
       <Slot />

@@ -1,54 +1,46 @@
-import { useRouter } from 'expo-router';
-import React from 'react';
+import { router } from 'expo-router';
+import { useCallback } from 'react';
+import { View } from 'react-native';
 
-import { Cover } from '@/components/cover';
-import {
-  Button,
-  FocusAwareStatusBar,
-  SafeAreaView,
-  Text,
-  View,
-} from '@/components/ui';
-import { useIsFirstTime } from '@/lib/hooks';
+import { Button, Text } from '@/components/ui';
+import { useAuthFlow } from '@/lib/hooks/use-auth-flow';
+
 export default function OnboardingScreen() {
-  const [_, setIsFirstTime] = useIsFirstTime();
-  const router = useRouter();
-  return (
-    <View className="flex h-full items-center  justify-center">
-      <FocusAwareStatusBar />
-      <View className="w-full flex-1">
-        <Cover />
-      </View>
-      <View className="justify-end ">
-        <Text className="my-3 text-center text-5xl font-bold">
-          Obytes Starter
-        </Text>
-        <Text className="mb-2 text-center text-lg text-gray-600">
-          The right way to build your mobile app
-        </Text>
+  const { setIsFirstTime } = useAuthFlow();
 
-        <Text className="my-1 pt-6 text-left text-lg">
-          🚀 Production-ready{' '}
+  const handleFinish = useCallback(() => {
+    setIsFirstTime(false);
+    router.replace('/sign-in' as any);
+  }, [setIsFirstTime]);
+
+  return (
+    <View className="flex-1 items-center justify-center bg-white p-6 dark:bg-neutral-900">
+      <View className="mb-8 items-center">
+        <Text className="mb-4 text-6xl">🔥</Text>
+        <Text className="mb-2 text-center text-2xl font-bold">
+          Welcome to StreakSphere
         </Text>
-        <Text className="my-1 text-left text-lg">
-          🥷 Developer experience + Productivity
-        </Text>
-        <Text className="my-1 text-left text-lg">
-          🧩 Minimal code and dependencies
-        </Text>
-        <Text className="my-1 text-left text-lg">
-          💪 well maintained third-party libraries
+        <Text className="text-center text-neutral-500">
+          Build and maintain daily habits with our intuitive streak tracking
+          system. Get motivated, stay consistent, and achieve your goals.
         </Text>
       </View>
-      <SafeAreaView className="mt-6">
+
+      <View className="w-full space-y-4">
+        <View className="space-y-2">
+          <Text className="text-lg">🚀 Track Your Progress</Text>
+          <Text className="text-lg">🎯 Set and Achieve Goals</Text>
+          <Text className="text-lg">👥 Join the Community</Text>
+        </View>
+
         <Button
-          label="Let's Get Started "
-          onPress={() => {
-            setIsFirstTime(false);
-            router.replace('/(auth)/');
-          }}
-        />
-      </SafeAreaView>
+          className="mt-8 w-full"
+          onPress={handleFinish}
+          testID="finish-onboarding-button"
+        >
+          <Text className="text-white">Get Started</Text>
+        </Button>
+      </View>
     </View>
   );
 }

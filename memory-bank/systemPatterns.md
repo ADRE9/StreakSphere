@@ -138,3 +138,99 @@ src/
 - Type-safe error handling
 - User-friendly error messages
 - Error logging and monitoring
+
+## Screen Structure
+
+The application follows a modular screen structure where each screen is organized in its own directory under `src/screens/`. This structure promotes better organization and separation of concerns.
+
+### Screen Directory Structure
+
+```
+src/screens/
+  ├── home-screen/
+  │   ├── home-screen.tsx    # Main screen component
+  │   └── index.ts          # Exports the screen component
+  ├── login-screen/
+  │   ├── login-screen.tsx  # Main screen component
+  │   └── index.ts          # Exports the screen component
+  ├── onboarding-screen/
+  │   ├── onboarding-screen.tsx  # Main screen component
+  │   └── index.ts               # Exports the screen component
+  ├── sign-up-screen/
+  │   ├── sign-up-screen.tsx    # Main screen component
+  │   └── index.ts              # Exports the screen component
+  └── verify-screen/
+      ├── verify-screen.tsx     # Main screen component
+      └── index.ts              # Exports the screen component
+```
+
+### Screen Export Pattern
+
+Each screen directory follows a consistent pattern:
+
+1. Main screen component file (e.g., `home-screen.tsx`)
+2. `index.ts` file that exports the screen component
+
+Example of `index.ts`:
+
+```typescript
+export { default } from './home-screen';
+```
+
+### Screen Component Guidelines
+
+1. **Naming Convention**
+
+   - Screen component files use kebab-case (e.g., `home-screen.tsx`)
+   - Component names use PascalCase (e.g., `HomeScreen`)
+
+2. **Component Structure**
+
+   - Each screen component should be self-contained
+   - Use functional components with TypeScript
+   - Implement proper error boundaries
+   - Handle loading states appropriately
+
+3. **State Management**
+
+   - Use React Hook Form for form handling
+   - Use Zustand for global state
+   - Implement proper loading and error states
+
+4. **Navigation**
+
+   - Use Expo Router for navigation
+   - Implement proper navigation guards
+   - Handle deep linking appropriately
+
+5. **Styling**
+   - Use Nativewind for styling
+   - Follow the design system
+   - Ensure responsive layouts
+
+### Screen Integration
+
+Screens are integrated into the app through the Expo Router file-based routing system in the `src/app` directory. The router automatically maps the screen components to their respective routes.
+
+#### Route File Naming Convention
+
+- Use `.ts` extension for route files that only export screen components
+- Use `.tsx` extension for route files that contain JSX/UI logic
+
+Example route mapping:
+
+```typescript
+// src/app/(auth)/sign-in.ts
+export { default } from '@/screens/login-screen';
+
+// src/app/(auth)/verify-email.ts
+export { default } from '@/screens/verify-screen';
+```
+
+This structure ensures:
+
+- Clear separation of concerns
+- Easy navigation between screens
+- Consistent component organization
+- Maintainable codebase
+- Scalable architecture
