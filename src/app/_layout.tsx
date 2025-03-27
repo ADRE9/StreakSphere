@@ -12,14 +12,15 @@ import { KeyboardProvider } from 'react-native-keyboard-controller';
 import Toast from 'react-native-toast-message';
 
 import { APIProvider } from '@/api';
-import { loadSelectedTheme, SessionProvider } from '@/lib';
+import { loadSelectedTheme } from '@/lib';
+import { AuthProvider } from '@/lib/auth/use-auth';
 import { useThemeConfig } from '@/lib/use-theme-config';
 
 export { ErrorBoundary } from 'expo-router';
 
 loadSelectedTheme();
 
-export default function RootLayout() {
+function RootLayout() {
   useEffect(() => {
     const init = async () => {
       // …do multiple sync or async tasks
@@ -48,14 +49,14 @@ function Providers({ children }: { children: React.ReactNode }) {
     >
       <KeyboardProvider>
         <ThemeProvider value={theme}>
-          <SessionProvider>
+          <AuthProvider>
             <APIProvider>
               <BottomSheetModalProvider>
                 {children}
                 <Toast />
               </BottomSheetModalProvider>
             </APIProvider>
-          </SessionProvider>
+          </AuthProvider>
         </ThemeProvider>
       </KeyboardProvider>
     </GestureHandlerRootView>
@@ -67,3 +68,5 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
+
+export default RootLayout;

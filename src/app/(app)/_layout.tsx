@@ -3,20 +3,19 @@ import { Redirect, Tabs } from 'expo-router';
 import React from 'react';
 
 import { Feed as FeedIcon } from '@/components/ui/icons';
-import { useAuthStore } from '@/lib/auth/store';
+import { useAuth } from '@/lib/auth/use-auth';
 import { useIsFirstTime } from '@/lib/hooks/use-is-first-time';
 
 export default function TabLayout() {
+  const { isAuthenticated } = useAuth();
   const [isFirstTime] = useIsFirstTime();
-  const { status, session } = useAuthStore();
 
   if (isFirstTime) {
     console.log('redirecting to onboarding');
     return <Redirect href="/(auth)/onboarding" />;
   }
 
-  if (status === 'signOut' || !session) {
-    console.log('redirecting to sign-in', session);
+  if (!isAuthenticated) {
     return <Redirect href="/(auth)/sign-in" />;
   }
 

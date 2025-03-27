@@ -1,25 +1,17 @@
 import { router } from 'expo-router';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { View } from 'react-native';
 
 import { Button, Text } from '@/components/ui';
-import { useAuthStore } from '@/lib/auth/store';
 
 export default function VerifyScreen() {
   const [isLoading, setIsLoading] = useState(false);
-  const { isEmailVerified, resendVerificationEmail } = useAuthStore();
 
   // Monitor verification status and redirect when verified
-  useEffect(() => {
-    if (isEmailVerified) {
-      router.replace('/(app)');
-    }
-  }, [isEmailVerified]);
 
   const handleResendEmail = async () => {
     setIsLoading(true);
     try {
-      await resendVerificationEmail();
     } finally {
       setIsLoading(false);
     }

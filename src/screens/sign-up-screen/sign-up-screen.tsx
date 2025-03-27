@@ -3,13 +3,9 @@ import { View } from 'react-native';
 
 import { AuthForm } from '@/components/auth-form';
 import { Text } from '@/components/ui';
-import { useAuthStore } from '@/lib/auth/store';
 
 export default function SignUpScreen() {
-  const { signUp } = useAuthStore();
-
-  const handleSubmit = async (data: any) => {
-    await signUp(data.email, data.password);
+  const handleSubmit = async () => {
     router.replace('/verify-email');
   };
 

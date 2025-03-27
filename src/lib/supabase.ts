@@ -30,3 +30,5 @@ AppState.addEventListener('change', (state) => {
     supabase.auth.stopAutoRefresh();
   }
 });
+
+export { type AuthError, type Session } from '@supabase/supabase-js';

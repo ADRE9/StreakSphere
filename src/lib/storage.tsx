@@ -1,65 +1,62 @@
+import * as Crypto from 'expo-crypto';
 import * as SecureStore from 'expo-secure-store';
 import { MMKV } from 'react-native-mmkv';
 
-// Create a 32-byte encryption key (must be exactly 32 bytes)
-const ENCRYPTION_KEY = 'streaksphere_encryption_key_32bytes!';
+const fetchOrGenerateEncryptionKey = (): string => {
+  const encryptionKey = SecureStore.getItem('session-encryption-key');
 
-// Initialize storage synchronously
+  if (encryptionKey) {
+    return encryptionKey;
+  } else {
+    const uuid = Crypto.randomUUID();
+    SecureStore.setItem('session-encryption-key', uuid);
+    return uuid;
+  }
+};
+
 export const storage = new MMKV({
-  id: 'streaksphere-storage',
-  encryptionKey: ENCRYPTION_KEY,
+  id: 'session',
+  encryptionKey: fetchOrGenerateEncryptionKey(),
 });
 
-// Use SecureStore for sensitive data
-export async function getSecureItem<T>(key: string): Promise<T | null> {
+/**
+ * Get an item from storage by key
+ *
+ * @param {string} key of the item to fetch
+ * @returns {Promise<string | null>} value for the key as a string or null if not found
+ */
+export async function getItem(key: string): Promise<string | null> {
   try {
-    const value = await SecureStore.getItemAsync(key);
-    return value ? JSON.parse(value) : null;
-  } catch (error) {
-    console.error('Error getting secure item:', error);
+    return storage.getString(key) ?? null;
+  } catch {
+    console.warn(`Failed to get key "${key}" from secure storage`);
     return null;
   }
 }
 
-export async function setSecureItem<T>(key: string, value: T): Promise<void> {
+/**
+ * Sets an item in storage by key
+ *
+ * @param {string} key of the item to store
+ * @param {string} value of the item to store
+ */
+export async function setItem(key: string, value: string): Promise<void> {
   try {
-    await SecureStore.setItemAsync(key, JSON.stringify(value));
-  } catch (error) {
-    console.error('Error setting secure item:', error);
+    storage.set(key, value);
+  } catch {
+    console.warn(`Failed to set key "${key}" in secure storage`);
   }
 }
 
-export async function removeSecureItem(key: string): Promise<void> {
-  try {
-    await SecureStore.deleteItemAsync(key);
-  } catch (error) {
-    console.error('Error removing secure item:', error);
-  }
-}
-
-// Non-sensitive data operations
-export function getItem<T>(key: string): T | null {
-  try {
-    const value = storage.getString(key);
-    return value ? JSON.parse(value) || null : null;
-  } catch (error) {
-    console.error('Error getting item:', error);
-    return null;
-  }
-}
-
-export async function setItem<T>(key: string, value: T): Promise<void> {
-  try {
-    storage.set(key, JSON.stringify(value));
-  } catch (error) {
-    console.error('Error setting item:', error);
-  }
-}
-
+/**
+ * Removes a single item from storage by key
+ *
+ * @param {string} key of the item to remove
+ */
 export async function removeItem(key: string): Promise<void> {
   try {
     storage.delete(key);
-  } catch (error) {
-    console.error('Error removing item:', error);
+  } catch {
+    console.warn(`Failed to remove key "${key}" from secure storage`);
   }
 }
