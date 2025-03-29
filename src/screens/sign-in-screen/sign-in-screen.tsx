@@ -26,9 +26,9 @@ export default function SignInScreen() {
         />
         <LinearGradient
           style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}
-          start={{ x: 0, y: 0.3 }}
+          start={{ x: 0, y: 0.4 }}
           end={{ x: 0, y: 0.8 }}
-          colors={['transparent', 'rgba(255,255,255,0.9)']}
+          colors={['transparent', 'rgba(255,255,255,1)']}
         />
       </View>
       <View className="relative top-[55%] h-2/5 w-full items-center justify-center rounded-3xl bg-white p-4">
