@@ -25,7 +25,7 @@ export default function SignInScreen() {
       className="relative flex-1"
     >
       <AuthBanner />
-      <View className="relative top-[55%] h-2/5 w-full items-center justify-center rounded-3xl bg-white p-4">
+      <View className="absolute bottom-0 w-full items-center justify-center rounded-t-3xl bg-white p-4 py-10">
         <Text className="mb-8 text-2xl font-bold">Log in with email</Text>
         <AuthForm mode="sign-in" onSubmit={handleSubmit} />
         <View className="mt-4 flex-row">
