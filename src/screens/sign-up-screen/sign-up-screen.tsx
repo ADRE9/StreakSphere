@@ -38,7 +38,6 @@ export default function SignUpScreen() {
             Sign In
           </Text>
         </View>
-        A
       </View>
     </View>
   );
