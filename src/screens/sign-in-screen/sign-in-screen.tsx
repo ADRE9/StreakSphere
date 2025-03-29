@@ -1,8 +1,7 @@
-import { Image } from 'expo-image';
-import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
 import { View } from 'react-native';
 
+import AuthBanner from '@/components/auth-banner';
 import { AuthForm, type SignInFormData } from '@/components/auth-form';
 import { Text } from '@/components/ui';
 import { useAuth } from '@/lib/auth/use-auth';
@@ -19,18 +18,7 @@ export default function SignInScreen() {
 
   return (
     <View className="relative flex-1">
-      <View className="absolute z-0 h-3/5 w-full bg-yellow-500">
-        <Image
-          source={require('assets/images/pngs/login_banner.png')}
-          className="flex-1"
-        />
-        <LinearGradient
-          style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}
-          start={{ x: 0, y: 0.4 }}
-          end={{ x: 0, y: 0.8 }}
-          colors={['transparent', 'rgba(255,255,255,1)']}
-        />
-      </View>
+      <AuthBanner />
       <View className="relative top-[55%] h-2/5 w-full items-center justify-center rounded-3xl bg-white p-4">
         <Text className="mb-8 text-2xl font-bold">Log in with email</Text>
         <AuthForm mode="sign-in" onSubmit={handleSubmit} />
