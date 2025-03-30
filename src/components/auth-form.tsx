@@ -2,7 +2,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { View } from 'react-native';
+import { KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native';
 import { z } from 'zod';
 
 import { Button, ControlledInput, Text } from '@/components/ui';
@@ -55,7 +55,7 @@ export function AuthForm({ mode, onSubmit }: AuthFormProps) {
     defaultValues: {
       email: '',
       password: '',
-      ...(isSignUp && { name: '', confirmPassword: '' }),
+      ...(isSignUp && { confirmPassword: '' }),
     },
   });
 
@@ -72,53 +72,64 @@ export function AuthForm({ mode, onSubmit }: AuthFormProps) {
   };
 
   return (
-    <View className="w-full space-y-4">
-      <ControlledInput
-        control={control}
-        name="email"
-        label="Email"
-        autoCapitalize="none"
-        keyboardType="email-address"
-        placeholder="Enter your email"
-        autoComplete="email"
-        testID="email-input"
-      />
-      <ControlledInput
-        control={control}
-        name="password"
-        label="Password"
-        secureTextEntry
-        placeholder="Enter your password"
-        autoComplete={isSignUp ? 'new-password' : 'password'}
-        testID="password-input"
-      />
-      {isSignUp && (
-        <ControlledInput
-          control={control}
-          name="confirmPassword"
-          label="Confirm Password"
-          secureTextEntry
-          placeholder="Confirm your password"
-          autoComplete="new-password"
-          testID="confirm-password-input"
-        />
-      )}
-      <Button
-        className="w-full"
-        onPress={handleSubmit(handleFormSubmit)}
-        disabled={isLoading || isSubmitting || !isValid}
-        testID={`${mode}-button`}
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      className="w-full"
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 40 : 0}
+    >
+      <ScrollView
+        contentContainerStyle={{ flexGrow: 1 }}
+        keyboardShouldPersistTaps="handled"
       >
-        <Text className="text-white">
-          {isLoading
-            ? isSignUp
-              ? 'Creating Account...'
-              : 'Signing in...'
-            : isSignUp
-              ? 'Sign Up'
-              : 'Sign In'}
-        </Text>
-      </Button>
-    </View>
+        <View className="w-full space-y-4">
+          <ControlledInput
+            control={control}
+            name="email"
+            label="Email"
+            autoCapitalize="none"
+            keyboardType="email-address"
+            placeholder="Enter your email"
+            autoComplete="email"
+            testID="email-input"
+          />
+          <ControlledInput
+            control={control}
+            name="password"
+            label="Password"
+            secureTextEntry
+            placeholder="Enter your password"
+            autoComplete={isSignUp ? 'new-password' : 'password'}
+            testID="password-input"
+          />
+          {isSignUp && (
+            <ControlledInput
+              control={control}
+              name="confirmPassword"
+              label="Confirm Password"
+              secureTextEntry
+              placeholder="Confirm your password"
+              autoComplete="new-password"
+              testID="confirm-password-input"
+            />
+          )}
+          <Button
+            className="w-full"
+            onPress={handleSubmit(handleFormSubmit)}
+            disabled={isLoading || isSubmitting || !isValid}
+            testID={`${mode}-button`}
+          >
+            <Text className="text-white">
+              {isLoading
+                ? isSignUp
+                  ? 'Creating Account...'
+                  : 'Signing in...'
+                : isSignUp
+                  ? 'Sign Up'
+                  : 'Sign In'}
+            </Text>
+          </Button>
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
