@@ -1,4 +1,4 @@
-import { router } from 'expo-router';
+import { Link, router } from 'expo-router';
 import { View } from 'react-native';
 import Animated from 'react-native-reanimated';
 
@@ -28,6 +28,12 @@ export default function SignInScreen() {
       <View className="absolute bottom-0 w-full items-center justify-center rounded-t-3xl bg-white p-4 py-10 dark:border-x-2 dark:border-t-2 dark:border-neutral-800 dark:bg-black">
         <Text className="mb-8 text-xl">Log in with email</Text>
         <AuthForm mode="sign-in" onSubmit={handleSubmit} />
+        <Link
+          href="/(auth)/forgot-password"
+          className="mt-4 flex-row text-primary-500 dark:text-primary-400"
+        >
+          Forgot your password?
+        </Link>
         <View className="mt-4 flex-row">
           <Text className="text-neutral-500">Don't have an account? </Text>
           <Text

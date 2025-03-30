@@ -1,14 +1,22 @@
 import { useReanimatedKeyboardAnimation } from 'react-native-keyboard-controller';
 import { interpolate, useAnimatedStyle } from 'react-native-reanimated';
 
-export function useKeyboardAnimation() {
+export function useKeyboardAnimation(pB?: number) {
   const { height, progress } = useReanimatedKeyboardAnimation();
+  const actualPaddingBottom = pB ?? 0;
 
   const animatedKeyboardViewStyle = useAnimatedStyle(() => {
-    const translateY = interpolate(progress.value, [0, 1], [0, height.value]);
-
+    'worklet';
     return {
-      transform: [{ translateY: translateY }],
+      transform: [
+        {
+          translateY: interpolate(
+            progress.value,
+            [0, 1],
+            [0, height.value + actualPaddingBottom]
+          ),
+        },
+      ],
     };
   });
 

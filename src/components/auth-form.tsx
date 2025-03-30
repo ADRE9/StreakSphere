@@ -124,7 +124,7 @@ export function AuthForm({ mode, onSubmit }: AuthFormProps) {
                   ? 'Creating Account...'
                   : 'Signing in...'
                 : isSignUp
-                  ? 'Sign Up'
+                  ? 'Create Account'
                   : 'Sign In'}
             </Text>
           </Button>
