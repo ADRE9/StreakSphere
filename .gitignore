@@ -19,3 +19,8 @@ yarn-error.log
 
 expo-env.d.ts
 # @end expo-cli
+
+#git ignore env files
+.env.production
+.env.staging
+.env.development

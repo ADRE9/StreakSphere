@@ -8,6 +8,7 @@
 - Expo CLI
 - iOS Simulator / Android Emulator
 - Git
+- Supabase CLI (for database migrations)
 
 ### Core Dependencies
 
@@ -18,55 +19,63 @@
   "react-native": "0.73.2",
   "nativewind": "^2.0.11",
   "tailwindcss": "^3.3.2",
-  "@tanstack/react-query": "^5.0.0",
-  "zustand": "^4.4.1",
+  "@legendapp/state": "^4.0.0",
+  "@supabase/supabase-js": "^2.39.0",
   "react-native-mmkv": "^2.11.0",
-  "react-native-reanimated": "~3.6.0"
+  "react-native-reanimated": "~3.6.0",
+  "uuid": "^9.0.0"
 }
 ```
 
-## Setup Instructions
+## Database Setup
 
-1. Installation
+### Supabase Configuration
 
-```bash
-npm install
-npx expo install
-```
-
-2. Development
+1. Create a new Supabase project
+2. Run migrations:
 
 ```bash
-npx expo start
+supabase link --project-ref <project-id>
+supabase db push
 ```
 
-3. Testing
+3. Environment Variables:
 
-```bash
-npm test
+```env
+EXPO_PUBLIC_SUPABASE_URL=your_supabase_url
+EXPO_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 ```
 
-## Technical Constraints
+### Database Schema
 
-### Mobile Platform Support
+- Two main tables: `habits` and `check_ins`
+- Row Level Security enabled
+- Automatic timestamps
+- Soft delete support
+- Proper indexing
 
-- iOS 13+
-- Android API Level 21+
-- Expo SDK 50
+## Local-First Implementation
 
-### Performance Targets
+### Legend State Setup
 
-- App size < 50MB
-- Launch time < 2s
-- Frame rate > 60fps
-- Offline capability
+- MMKV storage for persistence
+- Real-time sync with Supabase
+- Type-safe operations
+- Automatic conflict resolution
 
-### Security Requirements
+### Data Flow
 
-- Secure data storage
-- API key protection
-- Input validation
-- Type safety
+1. Local Operations
+
+   - Immediate local updates
+   - MMKV persistence
+   - Reactive state management
+
+2. Sync Operations
+   - Background sync
+   - Offline queue
+   - Conflict resolution
+   - Retry mechanism
 
 ## Development Guidelines
 
@@ -75,7 +84,7 @@ npm test
 - Feature-based directory structure
 - Shared components in ui/ directory
 - Type definitions in types/
-- API integration in api/
+- Database operations in lib/
 
 ### Styling
 
@@ -86,10 +95,10 @@ npm test
 
 ### State Management
 
-- Zustand for global state
-- React Query for API data
-- MMKV for persistence
-- Local state when appropriate
+- Legend State for data
+- Local-first operations
+- Real-time sync
+- Offline support
 
 ### Testing Strategy
 
@@ -119,13 +128,13 @@ npm test
 ### Performance Monitoring
 
 - React Native Performance
-- API response times
-- Animation frame rates
+- Database query performance
+- Sync status
 - Memory usage
 
 ### Error Tracking
 
 - Error boundaries
 - Crash reporting
-- API error logging
+- Sync errors
 - User feedback collection
