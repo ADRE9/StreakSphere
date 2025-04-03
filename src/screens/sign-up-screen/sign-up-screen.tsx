@@ -35,7 +35,7 @@ export default function SignUpScreen() {
       <View className="relative size-full items-center p-4 py-10 dark:bg-black">
         <View className="relative mt-10 size-64 overflow-hidden rounded-full">
           <Image
-            source={require('/assets/images/pngs/onboard_1.png')}
+            source={require('/assets/images/pngs/onboard-11.png')}
             contentFit="contain"
             className="size-full"
           />
