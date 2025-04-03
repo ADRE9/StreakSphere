@@ -1,3 +1,4 @@
+/* eslint-disable max-lines-per-function */
 import { type FlashList } from '@shopify/flash-list';
 import { router } from 'expo-router';
 import { useCallback, useRef, useState } from 'react';
@@ -27,6 +28,8 @@ export default function OnboardingScreen() {
         index: currentIndex + 1,
         animated: true,
       });
+    } else if (currentIndex === OnboardingData.length - 1) {
+      handleFinish();
     }
   };
 
@@ -54,8 +57,12 @@ export default function OnboardingScreen() {
       <View className="flex-[2]">
         <View className="h-12 flex-row">
           <View className="flex-1 items-center justify-center ">
-            <Pressable onPress={handlePrevious} className="">
-              <Text>{currentIndex === 0 ? 'Skip' : 'Previous'}</Text>
+            <Pressable onPress={handlePrevious}>
+              <Text
+                className={`${currentIndex === 0 ? 'text-primary-500' : ''}`}
+              >
+                {currentIndex === 0 ? 'Skip' : 'Previous'}
+              </Text>
             </Pressable>
           </View>
           <View className="flex-1 items-center justify-center">
@@ -63,7 +70,13 @@ export default function OnboardingScreen() {
           </View>
           <View className="flex-1 items-center justify-center ">
             <Pressable onPress={handleNext} className="">
-              <Text>Next</Text>
+              <Text
+                className={`${currentIndex === OnboardingData.length - 1 ? 'text-primary-500' : ''}`}
+              >
+                {currentIndex === OnboardingData.length - 1
+                  ? 'Get Started'
+                  : 'Next'}
+              </Text>
             </Pressable>
           </View>
         </View>

@@ -3,6 +3,7 @@ import { Image } from 'expo-image';
 import { router } from 'expo-router';
 import { Pressable, View } from 'react-native';
 import Animated from 'react-native-reanimated';
+import Toast from 'react-native-toast-message';
 
 import {
   AuthForm,
@@ -19,10 +20,18 @@ export default function SignUpScreen() {
 
   const handleSubmit = async (data: SignInFormData | SignUpFormData) => {
     if ('confirmPassword' in data) {
-      await signUp({
+      const { error } = await signUp({
         email: data.email,
         password: data.password,
       });
+      if (error) {
+        console.warn('error', error);
+        Toast.show({
+          type: 'error',
+          text1: 'Error signing up',
+        });
+        return;
+      }
       router.replace('/verify-email');
     }
   };

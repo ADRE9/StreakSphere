@@ -102,6 +102,7 @@ const ForgotPasswordScreen = () => {
           testID="email-input"
         />
         <Button
+          variant="secondary"
           onPress={handleSubmit(onSubmit)}
           disabled={isLoading || isSubmitting || !isValid || cooldown > 0}
         >

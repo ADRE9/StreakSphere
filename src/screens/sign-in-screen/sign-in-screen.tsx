@@ -1,6 +1,7 @@
 import { Link, router } from 'expo-router';
 import { View } from 'react-native';
 import Animated from 'react-native-reanimated';
+import Toast from 'react-native-toast-message';
 
 import AuthBanner from '@/components/auth-banner';
 import { AuthForm, type SignInFormData } from '@/components/auth-form';
@@ -12,10 +13,19 @@ export default function SignInScreen() {
   const { signIn } = useAuth();
   const { animatedKeyboardViewStyle } = useKeyboardAnimation();
   const handleSubmit = async (data: SignInFormData) => {
-    await signIn({
+    const { error } = await signIn({
       email: data.email,
       password: data.password,
     });
+    if (error) {
+      console.log('error', error);
+      Toast.show({
+        type: 'error',
+        text1: 'Invalid email or password',
+      });
+      return;
+    }
+
     router.replace('/(app)');
   };
 

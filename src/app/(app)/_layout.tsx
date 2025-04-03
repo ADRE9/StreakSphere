@@ -11,7 +11,6 @@ export default function TabLayout() {
   const [isFirstTime] = useIsFirstTime();
 
   if (isFirstTime) {
-    console.log('redirecting to onboarding');
     return <Redirect href="/(auth)/onboarding" />;
   }
 
