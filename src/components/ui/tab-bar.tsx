@@ -44,8 +44,8 @@ const TabBar = ({ state }: BottomTabBarProps) => {
   const router = useRouter();
 
   return (
-    <View className="absolute inset-x-0 bottom-0 h-[80] flex-row items-center justify-between px-4  py-2">
-      <TabBaseSvg className="absolute inset-0" />
+    <View className="absolute inset-x-0 bottom-0 h-[80] w-full flex-row items-center justify-between px-4 py-2">
+      <TabBaseSvg className="absolute inset-0 w-full" />
       {TabBarData.map((item) => {
         const isActive = state.routes[state.index].name === item.key;
         return (
@@ -56,7 +56,7 @@ const TabBar = ({ state }: BottomTabBarProps) => {
           >
             <Image
               style={{
-                opacity: isActive ? 1 : 0.5,
+                opacity: isActive ? 1 : 0.9,
               }}
               source={item.icon}
               className="size-10"

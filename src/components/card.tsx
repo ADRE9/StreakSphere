@@ -1,39 +1,38 @@
+import { BlurView } from 'expo-blur';
 import { Link } from 'expo-router';
 import React from 'react';
+import { useColorScheme, View } from 'react-native';
 
 import type { Post } from '@/api';
-import { Image, Pressable, Text, View } from '@/components/ui';
+import { Pressable, Text } from '@/components/ui';
 
 type Props = Post;
 
-const images = [
-  'https://images.unsplash.com/photo-1489749798305-4fea3ae63d43?auto=format&fit=crop&w=800&q=80',
-  'https://images.unsplash.com/photo-1564507004663-b6dfb3c824d5?auto=format&fit=crop&w=800&q=80',
-  'https://images.unsplash.com/photo-1515386474292-47555758ef2e?auto=format&fit=crop&w=800&q=80',
-  'https://plus.unsplash.com/premium_photo-1666815503002-5f07a44ac8fb?auto=format&fit=crop&w=800&q=80',
-  'https://images.unsplash.com/photo-1587974928442-77dc3e0dba72?auto=format&fit=crop&w=800&q=80',
-];
-
 export const Card = ({ title, body, id }: Props) => {
+  const colorScheme = useColorScheme();
   return (
     <Link href={`/feed/${id}`} asChild>
-      <Pressable>
-        <View className="m-2 overflow-hidden rounded-xl  border border-neutral-300 bg-white  dark:bg-neutral-900">
-          <Image
-            className="h-56 w-full overflow-hidden rounded-t-xl"
-            contentFit="cover"
-            source={{
-              uri: images[Math.floor(Math.random() * images.length)],
-            }}
-          />
-
-          <View className="p-2">
-            <Text className="py-3 text-2xl ">{title}</Text>
-            <Text numberOfLines={3} className="leading-snug text-gray-600">
-              {body}
-            </Text>
+      <Pressable className="mx-4 my-2 overflow-hidden rounded-xl dark:border dark:border-neutral-500">
+        <BlurView
+          experimentalBlurMethod={'dimezisBlurView'}
+          intensity={30}
+          tint={
+            colorScheme === 'light'
+              ? 'systemThinMaterialDark'
+              : 'systemThinMaterialLight'
+          }
+          className="flex-1 p-4"
+        >
+          <View className="flex-1 flex-row">
+            <View className="size-12 rounded-lg bg-black"></View>
+            <View className="flex-1 px-2">
+              <Text className="font-klasik text-2xl">{title}</Text>
+              <Text className="font-regular font-manrope text-sm">{body}</Text>
+            </View>
+            <View className="size-12 rounded-full bg-black"></View>
           </View>
-        </View>
+          <View className="mt-2 h-[80] w-full flex-1 rounded-lg bg-black"></View>
+        </BlurView>
       </Pressable>
     </Link>
   );

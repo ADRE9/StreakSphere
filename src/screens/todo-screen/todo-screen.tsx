@@ -1,10 +1,13 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
+
+import Header from '@/components/home/header';
 
 const TodoScreen = () => {
   return (
-    <View>
-      <Text>TodoScreen</Text>
+    <View className="flex-1 bg-blue-100 dark:bg-charcoal-800">
+      <Header title="TODO" />
+      <View className="flex-[8]"></View>
     </View>
   );
 };
