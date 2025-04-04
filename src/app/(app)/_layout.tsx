@@ -2,10 +2,9 @@
 import { Redirect, Tabs } from 'expo-router';
 import React from 'react';
 
-import { Feed as FeedIcon } from '@/components/ui/icons';
+import TabBar from '@/components/ui/tab-bar';
 import { useAuth } from '@/lib/auth/use-auth';
 import { useIsFirstTime } from '@/lib/hooks/use-is-first-time';
-
 export default function TabLayout() {
   const { isAuthenticated } = useAuth();
   const [isFirstTime] = useIsFirstTime();
@@ -20,12 +19,32 @@ export default function TabLayout() {
   }
 
   return (
-    <Tabs>
+    <Tabs tabBar={(props) => <TabBar {...props} />}>
       <Tabs.Screen
         name="index"
         options={{
           title: 'Feed',
-          tabBarIcon: ({ color }) => <FeedIcon color={color} />,
+          tabBarButtonTestID: 'feed-tab',
+        }}
+      />
+      <Tabs.Screen
+        name="pomodoro"
+        options={{
+          title: 'Pomodoro',
+          tabBarButtonTestID: 'feed-tab',
+        }}
+      />
+      <Tabs.Screen
+        name="todo"
+        options={{
+          title: 'Todo',
+          tabBarButtonTestID: 'feed-tab',
+        }}
+      />
+      <Tabs.Screen
+        name="settings"
+        options={{
+          title: 'Settings',
           tabBarButtonTestID: 'feed-tab',
         }}
       />
