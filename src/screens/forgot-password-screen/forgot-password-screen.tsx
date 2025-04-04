@@ -1,6 +1,7 @@
 /* eslint-disable max-lines-per-function */
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Image } from 'expo-image';
+import { router } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { View } from 'react-native';
@@ -13,7 +14,6 @@ import BackButton from '@/components/ui/back-button';
 import { Text } from '@/components/ui/text';
 import { useKeyboardAnimation } from '@/lib/hooks/use-animated-keyboard-styles';
 import { supabase } from '@/lib/supabase';
-import { tryCatch } from '@/utils/try-catch';
 const forgotPasswordSchema = z.object({
   email: z
     .string()
@@ -56,15 +56,16 @@ const ForgotPasswordScreen = () => {
 
   const onSubmit = async (data: ForgotPasswordFormData) => {
     setIsLoading(true);
-    const { error } = await tryCatch(
-      supabase.auth.resetPasswordForEmail(data.email, {
-        redirectTo: 'com.streaksphere://update-password',
-      })
-    );
+    const { error } = await supabase.auth.resetPasswordForEmail(data.email, {
+      redirectTo: 'com.streaksphere://update-password?type=recovery',
+    });
+
     if (error === null) {
       setCooldown(60);
     }
+
     setIsLoading(false);
+    router.replace('/(auth)/sign-in');
   };
 
   const formatTime = (seconds: number) => {

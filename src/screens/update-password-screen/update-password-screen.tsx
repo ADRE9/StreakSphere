@@ -1,8 +1,9 @@
 /* eslint-disable max-lines-per-function */
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Image } from 'expo-image';
+import * as Linking from 'expo-linking';
 import { router } from 'expo-router';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { View } from 'react-native';
 import Animated from 'react-native-reanimated';
@@ -14,7 +15,6 @@ import BackButton from '@/components/ui/back-button';
 import { Text } from '@/components/ui/text';
 import { useKeyboardAnimation } from '@/lib/hooks/use-animated-keyboard-styles';
 import { supabase } from '@/lib/supabase';
-import { tryCatch } from '@/utils/try-catch';
 
 const updatePasswordSchema = z
   .object({
@@ -37,6 +37,14 @@ type UpdatePasswordFormData = z.infer<typeof updatePasswordSchema>;
 const UpdatePasswordScreen = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { animatedKeyboardViewStyle } = useKeyboardAnimation(150);
+  const url = Linking.useLinkingURL();
+  const { queryParams } = Linking.parse(url as string);
+  console.log('url---->', url);
+  // const params = useLocalSearchParams();
+  console.log('params---->', queryParams);
+  // // Get the recovery token from the URL parameters
+  const token = queryParams?.token as string;
+  const type = queryParams?.type as string;
 
   const { control, handleSubmit } = useForm<UpdatePasswordFormData>({
     resolver: zodResolver(updatePasswordSchema),
@@ -47,17 +55,64 @@ const UpdatePasswordScreen = () => {
     },
   });
 
+  // Check if we have a valid session when the component mounts
+  useEffect(() => {
+    const checkSession = async () => {
+      // First try to get the current session
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      // If we have a session, we can proceed with password update
+      if (session) {
+        return;
+      }
+      // If no session and no token, redirect to forgot password
+      if (!token) {
+        Toast.show({
+          type: 'error',
+          text1: 'No active session found',
+          text2: 'Please sign in again or request a password reset',
+        });
+        // router.replace('/(auth)/forgot-password');
+        return;
+      }
+      // If we have a token, verify it
+      const { error } = await supabase.auth.verifyOtp({
+        token_hash: token,
+        type: type as any,
+      });
+      if (error) {
+        console.log('Token verification error:', error);
+        Toast.show({
+          type: 'error',
+          text1: 'Invalid or expired password reset link',
+          text2: 'Please request a new password reset link',
+        });
+        router.replace('/(auth)/forgot-password');
+      }
+    };
+    checkSession();
+  }, [token, type]);
+
   const onSubmit = async (data: UpdatePasswordFormData) => {
     setIsLoading(true);
-    const { error } = await tryCatch(
-      supabase.auth.updateUser({ password: data.new_password })
-    );
+
+    // For password reset flow, we need to use updateUser with the recovery token
+    const { error } = await supabase.auth.updateUser({
+      password: data.new_password,
+    });
+
+    console.log('error---->', error);
     if (error) {
       Toast.show({
         type: 'error',
         text1: 'Error updating password',
+        text2: error.message,
       });
+      setIsLoading(false);
+      return;
     }
+
     Toast.show({
       type: 'success',
       text1: 'Password updated successfully',

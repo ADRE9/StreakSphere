@@ -27,6 +27,7 @@ export default function VerifyScreen() {
         inbox and click the link to verify your account.
       </Text>
       <Button
+        variant="secondary"
         className="w-full"
         onPress={handleResendEmail}
         disabled={isLoading}
