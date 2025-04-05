@@ -1,3 +1,5 @@
+import 'react-native-get-random-values';
+
 import { observable } from '@legendapp/state';
 import { ObservablePersistMMKV } from '@legendapp/state/persist-plugins/mmkv';
 import { configureSynced } from '@legendapp/state/sync';
@@ -42,6 +44,27 @@ export const habits$ = observable(
     // Persist data and pending changes locally
     persist: {
       name: 'habits',
+      retrySync: true, // Persist pending changes and retry
+    },
+    retry: {
+      infinite: true, // Retry changes with exponential backoff
+    },
+  })
+);
+
+export const checkIns$ = observable(
+  customSynced({
+    supabase,
+    collection: 'check_ins',
+    select: (from) =>
+      from.select(
+        'id,checked_at,created_at,deleted,frequency,habit_id,updated_at'
+      ),
+    actions: ['read', 'create', 'update', 'delete'],
+    realtime: true,
+    // Persist data and pending changes locally
+    persist: {
+      name: 'check_ins', // Fixed name to match collection
       retrySync: true, // Persist pending changes and retry
     },
     retry: {

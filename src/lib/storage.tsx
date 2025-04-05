@@ -1,3 +1,5 @@
+import 'react-native-get-random-values';
+
 import * as Crypto from 'expo-crypto';
 import * as SecureStore from 'expo-secure-store';
 import { MMKV } from 'react-native-mmkv';
