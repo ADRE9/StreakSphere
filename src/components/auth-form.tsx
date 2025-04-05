@@ -61,7 +61,6 @@ export function AuthForm({ mode, onSubmit }: AuthFormProps) {
 
   const handleFormSubmit = async (data: SignInFormData | SignUpFormData) => {
     setIsLoading(true);
-
     try {
       await onSubmit(data);
     } catch (err) {
@@ -113,6 +112,7 @@ export function AuthForm({ mode, onSubmit }: AuthFormProps) {
             />
           )}
           <Button
+            variant="secondary"
             className="w-full"
             onPress={handleSubmit(handleFormSubmit)}
             disabled={isLoading || isSubmitting || !isValid}
@@ -124,7 +124,7 @@ export function AuthForm({ mode, onSubmit }: AuthFormProps) {
                   ? 'Creating Account...'
                   : 'Signing in...'
                 : isSignUp
-                  ? 'Sign Up'
+                  ? 'Create Account'
                   : 'Sign In'}
             </Text>
           </Button>

@@ -47,20 +47,20 @@ const OnboardingCarousel = forwardRef<
   const renderItem: ListRenderItem<OnboardingItem> = ({ item }) => (
     <View style={styles.container}>
       <View className="flex-[2]">
-        <Text className="absolute bottom-0 w-full text-center text-2xl font-bold">
+        <Text className="absolute bottom-0 w-full text-center text-2xl font-bold dark:text-white">
           {item.title}
         </Text>
       </View>
       <View className="flex-[8]">
-        <View className="flex-[9]">
+        <View className="my-10 flex-[9]">
           <Image
             source={item.image}
             contentFit="contain"
             className="size-full"
           />
         </View>
-        <View className="flex-[1] p-5">
-          <Text className="text-center text-lg font-bold">
+        <View className="flex-[1]">
+          <Text className="mx-8  text-center text-lg font-bold dark:text-white">
             {item.description.toUpperCase()}
           </Text>
         </View>
