@@ -30,7 +30,7 @@ const AuthBanner = ({ mode = 'sign-in' }: AuthBannerProps) => {
             ? "LET'S GET\nYOU STARTED"
             : 'WELCOME TO\nSTREAK SPHERE'}
         </Text>
-        <Pressable className=" dark:border-x-hairline dark:border-y-hairline mt-4 flex-row items-center justify-center gap-2  rounded-xl bg-white p-4 dark:border-neutral-600 dark:bg-neutral-800">
+        <Pressable className="dark:border-x-hairline dark:border-y-hairline mt-4 flex-row items-center justify-center gap-2  rounded-xl bg-white p-4 dark:border-neutral-600 dark:bg-neutral-800">
           <AntDesign name="google" size={20} color="red" />
           <Text>Continue with Google</Text>
         </Pressable>
