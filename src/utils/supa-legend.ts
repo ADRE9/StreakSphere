@@ -35,7 +35,7 @@ export const habits$ = observable(
     collection: 'habits',
     select: (from) =>
       from.select(
-        'id,title,description,streak_count,last_checked_in,created_at,updated_at,deleted,user_id'
+        'id,title,description,streak_count,last_checked_in,created_at,updated_at,deleted,user_id,color,icon,reminder_days,reminder_time'
       ),
     actions: ['read', 'create', 'update', 'delete'],
     realtime: true,

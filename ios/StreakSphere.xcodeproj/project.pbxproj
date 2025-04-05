@@ -10,36 +10,40 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		20FCB975D39FDAF418FB16E6 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = BBF5E08B740ACB82E82D8C6F /* PrivacyInfo.xcprivacy */; };
+		3A3D7A1965084AC88295AABA /* noop-file.swift in Sources */ = {isa = PBXBuildFile; fileRef = C558346E1F2D45CC9825369E /* noop-file.swift */; };
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
-		627C8FA6989F4E2DB9EA7C7F /* noop-file.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FA44514B5240E5AFBA5FFA /* noop-file.swift */; };
+		3F338FBBD94B4F17A3398022 /* Inter.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E76C0715A73F4541B64EA922 /* Inter.ttf */; };
+		564EF712AEE94B7DBAF5968D /* Manrope.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1CA5EDA92AF34865877048A6 /* Manrope.ttf */; };
 		96905EF65AED1B983A6B3ABC /* libPods-StreakSphere.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58EEBF8E8E6FB1BC6CAF49B5 /* libPods-StreakSphere.a */; };
-		9AA7EBA0946046D687A0F1CE /* Inter.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F7E22AB91D5045C6BD85FCC7 /* Inter.ttf */; };
 		B18059E884C0ABDD17F3DC3D /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
-		DB82B82436B546A2A88612AB /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 72C43BB2A7054788BE9AC067 /* BootSplash.storyboard */; };
-		E8201F181A6A9EA180A447B3 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 32A4C6BE857A1467BD8014DF /* PrivacyInfo.xcprivacy */; };
-		ED49FC4F3BFE432E94FB0481 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7A2469CCF05F4F56BE8688E6 /* Colors.xcassets */; };
+		C4D50A95B2474FFC8D397B6E /* Klasik-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 69A29B3FB9694E39A0018450 /* Klasik-Regular.ttf */; };
+		F2FA2BE182BA46A0BA4FE51D /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 01F3E19961EF4559A408F370 /* Colors.xcassets */; };
+		FD9550C04B644F43A165D5C9 /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B8D60238D46D484695A63931 /* BootSplash.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		01F3E19961EF4559A408F370 /* Colors.xcassets */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = folder.assetcatalog; name = Colors.xcassets; path = StreakSphere/Colors.xcassets; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* StreakSphere.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StreakSphere.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = StreakSphere/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = StreakSphere/AppDelegate.mm; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = StreakSphere/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = StreakSphere/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = StreakSphere/main.m; sourceTree = "<group>"; };
-		32A4C6BE857A1467BD8014DF /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = StreakSphere/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		1CA5EDA92AF34865877048A6 /* Manrope.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Manrope.ttf; path = ../assets/fonts/Manrope.ttf; sourceTree = "<group>"; };
 		58EEBF8E8E6FB1BC6CAF49B5 /* libPods-StreakSphere.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-StreakSphere.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		6A9FDFDD77F745F494FC5964 /* StreakSphere-Bridging-Header.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = "StreakSphere-Bridging-Header.h"; path = "StreakSphere/StreakSphere-Bridging-Header.h"; sourceTree = "<group>"; };
+		69A29B3FB9694E39A0018450 /* Klasik-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Klasik-Regular.ttf"; path = "../assets/fonts/Klasik-Regular.ttf"; sourceTree = "<group>"; };
 		6C2E3173556A471DD304B334 /* Pods-StreakSphere.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StreakSphere.debug.xcconfig"; path = "Target Support Files/Pods-StreakSphere/Pods-StreakSphere.debug.xcconfig"; sourceTree = "<group>"; };
-		72C43BB2A7054788BE9AC067 /* BootSplash.storyboard */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = BootSplash.storyboard; path = StreakSphere/BootSplash.storyboard; sourceTree = "<group>"; };
-		7A2469CCF05F4F56BE8688E6 /* Colors.xcassets */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = folder.assetcatalog; name = Colors.xcassets; path = StreakSphere/Colors.xcassets; sourceTree = "<group>"; };
 		7A4D352CD337FB3A3BF06240 /* Pods-StreakSphere.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StreakSphere.release.xcconfig"; path = "Target Support Files/Pods-StreakSphere/Pods-StreakSphere.release.xcconfig"; sourceTree = "<group>"; };
-		A0FA44514B5240E5AFBA5FFA /* noop-file.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = "noop-file.swift"; path = "StreakSphere/noop-file.swift"; sourceTree = "<group>"; };
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = StreakSphere/SplashScreen.storyboard; sourceTree = "<group>"; };
+		B8D60238D46D484695A63931 /* BootSplash.storyboard */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = BootSplash.storyboard; path = StreakSphere/BootSplash.storyboard; sourceTree = "<group>"; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
+		BBF5E08B740ACB82E82D8C6F /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = StreakSphere/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		C558346E1F2D45CC9825369E /* noop-file.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = "noop-file.swift"; path = "StreakSphere/noop-file.swift"; sourceTree = "<group>"; };
+		E76C0715A73F4541B64EA922 /* Inter.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Inter.ttf; path = ../assets/fonts/Inter.ttf; sourceTree = "<group>"; };
+		E8CB555214054C82846F1198 /* StreakSphere-Bridging-Header.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = "StreakSphere-Bridging-Header.h"; path = "StreakSphere/StreakSphere-Bridging-Header.h"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		F7E22AB91D5045C6BD85FCC7 /* Inter.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Inter.ttf; path = ../assets/fonts/Inter.ttf; sourceTree = "<group>"; };
 		FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-StreakSphere/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -65,11 +69,11 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB71A68108700A75B9A /* main.m */,
 				AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */,
-				A0FA44514B5240E5AFBA5FFA /* noop-file.swift */,
-				6A9FDFDD77F745F494FC5964 /* StreakSphere-Bridging-Header.h */,
-				72C43BB2A7054788BE9AC067 /* BootSplash.storyboard */,
-				7A2469CCF05F4F56BE8688E6 /* Colors.xcassets */,
-				32A4C6BE857A1467BD8014DF /* PrivacyInfo.xcprivacy */,
+				C558346E1F2D45CC9825369E /* noop-file.swift */,
+				E8CB555214054C82846F1198 /* StreakSphere-Bridging-Header.h */,
+				B8D60238D46D484695A63931 /* BootSplash.storyboard */,
+				01F3E19961EF4559A408F370 /* Colors.xcassets */,
+				BBF5E08B740ACB82E82D8C6F /* PrivacyInfo.xcprivacy */,
 			);
 			name = StreakSphere;
 			sourceTree = "<group>";
@@ -83,10 +87,12 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		4B156031C3344DE29495208A /* Resources */ = {
+		4D69A6B4DDDD43F99CF0BE85 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				F7E22AB91D5045C6BD85FCC7 /* Inter.ttf */,
+				E76C0715A73F4541B64EA922 /* Inter.ttf */,
+				1CA5EDA92AF34865877048A6 /* Manrope.ttf */,
+				69A29B3FB9694E39A0018450 /* Klasik-Regular.ttf */,
 			);
 			name = Resources;
 			path = "";
@@ -108,7 +114,7 @@
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				D65327D7A22EEC0BE12398D9 /* Pods */,
 				D7E4C46ADA2E9064B798F356 /* ExpoModulesProviders */,
-				4B156031C3344DE29495208A /* Resources */,
+				4D69A6B4DDDD43F99CF0BE85 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -165,13 +171,13 @@
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "StreakSphere" */;
 			buildPhases = (
 				08A4A3CD28434E44B6B9DE2E /* [CP] Check Pods Manifest.lock */,
-				807F49772EFB92EBFDE3503D /* [Expo] Configure project */,
+				9F917F317E8F15BD897ECC40 /* [Expo] Configure project */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */,
-				E5085318044CCAC5454F46EB /* [CP] Embed Pods Frameworks */,
+				F08F76A6A3B95C11A7F6DD62 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -221,10 +227,12 @@
 				BB2F792D24A3F905000567C9 /* Expo.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
-				9AA7EBA0946046D687A0F1CE /* Inter.ttf in Resources */,
-				DB82B82436B546A2A88612AB /* BootSplash.storyboard in Resources */,
-				ED49FC4F3BFE432E94FB0481 /* Colors.xcassets in Resources */,
-				E8201F181A6A9EA180A447B3 /* PrivacyInfo.xcprivacy in Resources */,
+				3F338FBBD94B4F17A3398022 /* Inter.ttf in Resources */,
+				564EF712AEE94B7DBAF5968D /* Manrope.ttf in Resources */,
+				C4D50A95B2474FFC8D397B6E /* Klasik-Regular.ttf in Resources */,
+				FD9550C04B644F43A165D5C9 /* BootSplash.storyboard in Resources */,
+				F2FA2BE182BA46A0BA4FE51D /* Colors.xcassets in Resources */,
+				20FCB975D39FDAF418FB16E6 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -310,7 +318,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-StreakSphere/Pods-StreakSphere-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		807F49772EFB92EBFDE3503D /* [Expo] Configure project */ = {
+		9F917F317E8F15BD897ECC40 /* [Expo] Configure project */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
@@ -329,7 +337,7 @@
 			shellPath = /bin/sh;
 			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-StreakSphere/expo-configure-project.sh\"\n";
 		};
-		E5085318044CCAC5454F46EB /* [CP] Embed Pods Frameworks */ = {
+		F08F76A6A3B95C11A7F6DD62 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -357,7 +365,7 @@
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				B18059E884C0ABDD17F3DC3D /* ExpoModulesProvider.swift in Sources */,
-				627C8FA6989F4E2DB9EA7C7F /* noop-file.swift in Sources */,
+				3A3D7A1965084AC88295AABA /* noop-file.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

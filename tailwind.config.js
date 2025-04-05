@@ -10,6 +10,8 @@ module.exports = {
     extend: {
       fontFamily: {
         inter: ['Inter'],
+        klasik: ['Klasik-Regular'],
+        manrope: ['Manrope'],
       },
       colors,
     },
