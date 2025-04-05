@@ -10,7 +10,6 @@ export const SCREEN_HEIGHT = height;
 
 // for onError react queries and mutations
 export const showError = (error: AxiosError) => {
-  console.log(JSON.stringify(error?.response?.data));
   const description = extractError(error?.response?.data).trimEnd();
 
   Toast.show({

@@ -39,9 +39,7 @@ const UpdatePasswordScreen = () => {
   const { animatedKeyboardViewStyle } = useKeyboardAnimation(150);
   const url = Linking.useLinkingURL();
   const { queryParams } = Linking.parse(url as string);
-  console.log('url---->', url);
   // const params = useLocalSearchParams();
-  console.log('params---->', queryParams);
   // // Get the recovery token from the URL parameters
   const token = queryParams?.token as string;
   const type = queryParams?.type as string;
@@ -82,7 +80,6 @@ const UpdatePasswordScreen = () => {
         type: type as any,
       });
       if (error) {
-        console.log('Token verification error:', error);
         Toast.show({
           type: 'error',
           text1: 'Invalid or expired password reset link',
@@ -102,7 +99,6 @@ const UpdatePasswordScreen = () => {
       password: data.new_password,
     });
 
-    console.log('error---->', error);
     if (error) {
       Toast.show({
         type: 'error',

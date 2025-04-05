@@ -2,6 +2,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { z } from 'zod';
 
 import ColorCard from '@/components/color-card';
@@ -47,7 +48,10 @@ const AddHabitForm = () => {
       !selectedHabitFeature.color ||
       !selectedHabitFeature.frequency
     ) {
-      console.log('Please select all features');
+      Toast.show({
+        type: 'error',
+        text1: 'Please select all features',
+      });
       return;
     }
     const habitObject = {
@@ -58,8 +62,8 @@ const AddHabitForm = () => {
       reminder_time: new Date().getTime().toString(),
       reminder_days: ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'],
       last_checked_in: new Date().getTime().toString(),
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
     };
     createHabit(habitObject);
   };

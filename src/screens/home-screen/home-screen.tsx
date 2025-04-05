@@ -5,8 +5,8 @@ import AddHabitForm from '@/components/add-habit-form';
 import Backdrop from '@/components/backdrop';
 import BgDoodleImage from '@/components/bg-doodle-image';
 import { FabButton } from '@/components/fab-button';
-import HabitList from '@/components/habit-list';
 import Banner from '@/components/home/banner';
+import HabitList from '@/components/home/habit-list';
 import Header from '@/components/home/header';
 import { colors } from '@/components/ui';
 

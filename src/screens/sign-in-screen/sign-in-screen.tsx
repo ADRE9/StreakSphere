@@ -18,7 +18,6 @@ export default function SignInScreen() {
       password: data.password,
     });
     if (error) {
-      console.log('error', error);
       Toast.show({
         type: 'error',
         text1: 'Invalid email or password',
