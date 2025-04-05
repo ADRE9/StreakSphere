@@ -71,37 +71,76 @@ export type Database = {
       };
       habits: {
         Row: {
+          color: string | null;
           created_at: string | null;
           deleted: boolean | null;
           description: string | null;
+          icon: string;
           id: string;
           last_checked_in: string | null;
+          reminder_days: number[] | null;
+          reminder_time: string | null;
           streak_count: number | null;
           title: string;
           updated_at: string | null;
           user_id: string | null;
         };
         Insert: {
+          color?: string | null;
           created_at?: string | null;
           deleted?: boolean | null;
           description?: string | null;
+          icon: string;
           id?: string;
           last_checked_in?: string | null;
+          reminder_days?: number[] | null;
+          reminder_time?: string | null;
           streak_count?: number | null;
           title: string;
           updated_at?: string | null;
           user_id?: string | null;
         };
         Update: {
+          color?: string | null;
           created_at?: string | null;
           deleted?: boolean | null;
           description?: string | null;
+          icon?: string;
           id?: string;
           last_checked_in?: string | null;
+          reminder_days?: number[] | null;
+          reminder_time?: string | null;
           streak_count?: number | null;
           title?: string;
           updated_at?: string | null;
           user_id?: string | null;
+        };
+        Relationships: [];
+      };
+      profiles: {
+        Row: {
+          avatar_url: string | null;
+          created_at: string | null;
+          full_name: string | null;
+          id: string;
+          updated_at: string | null;
+          username: string | null;
+        };
+        Insert: {
+          avatar_url?: string | null;
+          created_at?: string | null;
+          full_name?: string | null;
+          id: string;
+          updated_at?: string | null;
+          username?: string | null;
+        };
+        Update: {
+          avatar_url?: string | null;
+          created_at?: string | null;
+          full_name?: string | null;
+          id?: string;
+          updated_at?: string | null;
+          username?: string | null;
         };
         Relationships: [];
       };
