@@ -10,8 +10,8 @@ import FrequencyCounter from '@/components/frequency-counter';
 import IconCard from '@/components/icon-card';
 import { type IconName } from '@/components/icons';
 import { Button, ControlledInput, Text, View } from '@/components/ui';
+import { useAuth } from '@/lib/auth/use-auth';
 import { createHabit } from '@/lib/state/habits-actions';
-
 const schema = z.object({
   title: z.string().min(1, 'Habit name is required'),
   description: z.string().min(1, 'Description is required'),
@@ -32,6 +32,7 @@ const AddHabitForm = () => {
       color: null,
       frequency: 1,
     });
+  const { user } = useAuth();
 
   const { control, handleSubmit } = useForm<FormType>({
     resolver: zodResolver(schema),
@@ -59,12 +60,15 @@ const AddHabitForm = () => {
       icon: selectedHabitFeature.icon as string,
       color: selectedHabitFeature.color,
       streak_count: 0,
-      reminder_time: new Date().getTime().toString(),
+      user_id: user!.id,
+      deleted: false,
+      reminder_time: new Date().toISOString(),
       reminder_days: ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'],
-      last_checked_in: new Date().getTime().toString(),
+      last_checked_in: new Date().toISOString(),
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
     };
+    console.log('habitObject', habitObject);
     createHabit(habitObject);
   };
 

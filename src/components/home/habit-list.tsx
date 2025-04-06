@@ -4,10 +4,12 @@ import React from 'react';
 import { View } from 'react-native';
 
 import { Card } from '@/components/card';
-import { habits$ as _habits$ } from '@/utils/supa-legend';
+import { habits$ } from '@/utils/supa-legend';
 
 const HabitList = observer(() => {
-  const habits = _habits$.get();
+  const habits = habits$.get();
+  if (!habits) return null;
+
   const habitKeyArray = Object.keys(habits).map((key) => habits[key]);
 
   return (
@@ -30,6 +32,8 @@ const HabitList = observer(() => {
             last_checked_in={item.last_checked_in ?? ''}
             created_at={item.created_at ?? ''}
             updated_at={item.updated_at ?? ''}
+            deleted={null}
+            user_id={''}
           />
         )}
       />

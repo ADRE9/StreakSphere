@@ -1,3 +1,6 @@
+-- Enable UUID extension
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
 -- Create habits table
 CREATE TABLE habits (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -8,8 +11,16 @@ CREATE TABLE habits (
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   deleted BOOLEAN DEFAULT FALSE,
-  user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE
+  user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
+  color TEXT NOT NULL DEFAULT '#4F46E5',
+  icon TEXT NOT NULL DEFAULT 'activity',
+  reminder_time TIME,
+  reminder_days TEXT[] DEFAULT '{}',
+  frequency INTEGER DEFAULT 1
 );
+
+-- Enable realtime
+ALTER publication supabase_realtime ADD TABLE habits;
 
 -- Create check_ins table
 CREATE TABLE check_ins (
@@ -18,12 +29,83 @@ CREATE TABLE check_ins (
   checked_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-  deleted BOOLEAN DEFAULT FALSE
+  deleted BOOLEAN DEFAULT FALSE,
+  frequency INTEGER DEFAULT 1
 );
 
--- Create RLS policies
+-- Enable realtime
+ALTER publication supabase_realtime ADD TABLE check_ins;
+
+-- Create profiles table
+CREATE TABLE profiles (
+  id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
+  username TEXT UNIQUE,
+  full_name TEXT,
+  avatar_url TEXT,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Enable RLS
 ALTER TABLE habits ENABLE ROW LEVEL SECURITY;
 ALTER TABLE check_ins ENABLE ROW LEVEL SECURITY;
+ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
+
+-- Create function to handle timestamps for realtime updates
+CREATE OR REPLACE FUNCTION handle_times()
+RETURNS TRIGGER AS $$
+BEGIN
+  IF (TG_OP = 'INSERT') THEN
+    NEW.created_at := now();
+    NEW.updated_at := now();
+  ELSEIF (TG_OP = 'UPDATE') THEN
+    NEW.created_at := OLD.created_at;
+    NEW.updated_at := now();
+  END IF;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+-- Create triggers for timestamp handling
+CREATE TRIGGER handle_habits_times
+  BEFORE INSERT OR UPDATE ON habits
+  FOR EACH ROW
+  EXECUTE FUNCTION handle_times();
+
+CREATE TRIGGER handle_check_ins_times
+  BEFORE INSERT OR UPDATE ON check_ins
+  FOR EACH ROW
+  EXECUTE FUNCTION handle_times();
+
+CREATE TRIGGER handle_profiles_times
+  BEFORE INSERT OR UPDATE ON profiles
+  FOR EACH ROW
+  EXECUTE FUNCTION handle_times();
+
+-- Create function to handle new user creation
+CREATE OR REPLACE FUNCTION public.handle_new_user()
+RETURNS TRIGGER AS $$
+BEGIN
+  INSERT INTO public.profiles (id, username, full_name)
+  VALUES (
+    NEW.id,
+    NEW.email, -- Use email as initial username
+    NEW.raw_user_meta_data->>'full_name'
+  );
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+-- Create trigger for new user creation
+CREATE TRIGGER on_auth_user_created
+  AFTER INSERT ON auth.users
+  FOR EACH ROW EXECUTE FUNCTION public.handle_new_user();
+
+-- Create indexes
+CREATE INDEX habits_user_id_idx ON habits(user_id);
+CREATE INDEX check_ins_habit_id_idx ON check_ins(habit_id);
+CREATE INDEX check_ins_checked_at_idx ON check_ins(checked_at);
+CREATE INDEX habits_reminder_time_idx ON habits(reminder_time, reminder_days);
 
 -- Habits policies
 CREATE POLICY "Users can view their own habits"
@@ -83,27 +165,32 @@ CREATE POLICY "Users can delete their own check-ins"
     )
   );
 
--- Create updated_at trigger function
-CREATE OR REPLACE FUNCTION update_updated_at_column()
+-- Profiles policies
+CREATE POLICY "Users can view their own profile"
+  ON profiles FOR SELECT
+  USING (auth.uid() = id);
+
+CREATE POLICY "Users can update their own profile"
+  ON profiles FOR UPDATE
+  USING (auth.uid() = id);
+
+-- Create function to update streak count
+CREATE OR REPLACE FUNCTION update_streak_count()
 RETURNS TRIGGER AS $$
 BEGIN
-  NEW.updated_at = NOW();
+  -- Update the habit's streak count and last_checked_in
+  UPDATE habits
+  SET 
+    streak_count = streak_count + 1,
+    last_checked_in = NEW.checked_at
+  WHERE id = NEW.habit_id;
+  
   RETURN NEW;
 END;
-$$ language 'plpgsql';
+$$ LANGUAGE plpgsql SECURITY DEFINER;
 
--- Add updated_at triggers
-CREATE TRIGGER update_habits_updated_at
-  BEFORE UPDATE ON habits
+-- Create trigger for streak count updates
+CREATE TRIGGER update_streak_on_check_in
+  AFTER INSERT ON check_ins
   FOR EACH ROW
-  EXECUTE FUNCTION update_updated_at_column();
-
-CREATE TRIGGER update_check_ins_updated_at
-  BEFORE UPDATE ON check_ins
-  FOR EACH ROW
-  EXECUTE FUNCTION update_updated_at_column();
-
--- Create indexes
-CREATE INDEX habits_user_id_idx ON habits(user_id);
-CREATE INDEX check_ins_habit_id_idx ON check_ins(habit_id);
-CREATE INDEX check_ins_checked_at_idx ON check_ins(checked_at); 
+  EXECUTE FUNCTION update_streak_count(); 

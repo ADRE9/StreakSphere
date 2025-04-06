@@ -3,6 +3,7 @@
 import {
   type AuthResponse,
   type AuthTokenResponsePassword,
+  type User,
 } from '@supabase/supabase-js';
 import React, {
   createContext,
@@ -16,6 +17,7 @@ import React, {
 import { type Session, supabase } from '../supabase';
 
 type AuthState = {
+  user?: User;
   isAuthenticated: boolean;
   token?: Session['access_token'];
 };
@@ -38,6 +40,7 @@ type AuthContextType = {
 
 const AuthContext = createContext<AuthContextType>({
   isAuthenticated: false,
+  user: undefined,
   token: undefined,
   signIn: () => new Promise(() => ({})),
   signUp: () => new Promise(() => ({})),
@@ -58,6 +61,7 @@ export function useAuth() {
 
 export const AuthProvider = ({ children }: PropsWithChildren) => {
   const [token, setToken] = useState<AuthState['token']>(undefined);
+  const [user, setUser] = useState<AuthState['user']>(undefined);
 
   const signIn = useCallback(
     async ({ email, password }: SignInProps) => {
@@ -65,9 +69,13 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
         email,
         password,
       });
-
+      console.log('result', result);
       if (result.data?.session?.access_token) {
         setToken(result.data.session.access_token);
+      }
+
+      if (result.data?.user) {
+        setUser(result.data.user);
       }
 
       return result;
@@ -124,6 +132,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       value={{
         isAuthenticated: !!token,
         token,
+        user,
         signIn,
         signUp,
         signOut,

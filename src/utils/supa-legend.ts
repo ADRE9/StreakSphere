@@ -2,41 +2,27 @@ import 'react-native-get-random-values';
 
 import { observable } from '@legendapp/state';
 import { ObservablePersistMMKV } from '@legendapp/state/persist-plugins/mmkv';
-import { configureSynced } from '@legendapp/state/sync';
-import { syncedSupabase } from '@legendapp/state/sync-plugins/supabase';
-import { createClient } from '@supabase/supabase-js';
+import {
+  configureSyncedSupabase,
+  syncedSupabase,
+} from '@legendapp/state/sync-plugins/supabase';
 import { v4 as uuidv4 } from 'uuid';
 
-import { type Database } from './database.types';
-
-const supabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL;
-const supabaseAnonKey = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY;
-
-if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error('Missing Supabase environment variables');
-}
-
-const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey);
+import { supabase } from '@/lib/supabase';
 
 const generateId = () => uuidv4();
 
 // Create a configured sync function
-const customSynced = configureSynced(syncedSupabase, {
-  // Use React Native Async Storage
-  persist: {
-    plugin: ObservablePersistMMKV,
-  },
+configureSyncedSupabase({
   generateId,
-  supabase,
   changesSince: 'last-sync',
   fieldCreatedAt: 'created_at',
   fieldUpdatedAt: 'updated_at',
-  // Optionally enable soft deletes
   fieldDeleted: 'deleted',
 });
 
 export const habits$ = observable(
-  customSynced({
+  syncedSupabase({
     supabase,
     collection: 'habits',
     select: (from) =>
@@ -45,19 +31,20 @@ export const habits$ = observable(
       ),
     actions: ['read', 'create', 'update', 'delete'],
     realtime: true,
-    // Persist data and pending changes locally
     persist: {
+      plugin: ObservablePersistMMKV,
       name: 'habits',
-      retrySync: true, // Persist pending changes and retry
+      retrySync: true,
     },
     retry: {
-      infinite: true, // Retry changes with exponential backoff
+      infinite: true,
     },
+    onError: (error) => console.error('Synced Supabase error:', error),
   })
 );
 
 export const checkIns$ = observable(
-  customSynced({
+  syncedSupabase({
     supabase,
     collection: 'check_ins',
     select: (from) =>
@@ -66,13 +53,14 @@ export const checkIns$ = observable(
       ),
     actions: ['read', 'create', 'update', 'delete'],
     realtime: true,
-    // Persist data and pending changes locally
     persist: {
-      name: 'check_ins', // Fixed name to match collection
-      retrySync: true, // Persist pending changes and retry
+      plugin: ObservablePersistMMKV,
+      name: 'check_ins',
+      retrySync: true,
     },
     retry: {
-      infinite: true, // Retry changes with exponential backoff
+      infinite: true,
     },
+    onError: (error) => console.error('Synced Supabase error:', error),
   })
 );

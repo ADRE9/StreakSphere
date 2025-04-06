@@ -5,6 +5,8 @@ export type THabit = {
   description: string | null;
   streak_count: number;
   reminder_time: string;
+  deleted: boolean | null;
+  user_id: string;
   reminder_days: string[];
   last_checked_in: string;
   color: string;
