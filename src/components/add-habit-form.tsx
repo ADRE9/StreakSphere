@@ -65,10 +65,9 @@ const AddHabitForm = () => {
       reminder_time: new Date().toISOString(),
       reminder_days: ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'],
       last_checked_in: new Date().toISOString(),
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
+      created_at: null,
+      updated_at: null,
     };
-    console.log('habitObject', habitObject);
     createHabit(habitObject);
   };
 

@@ -8,7 +8,7 @@ import { type THabit } from '@/types/habit';
 
 import Icon, { type IconName } from './icons';
 
-type Props = THabit;
+type Props = Omit<THabit, 'created_at' | 'updated_at' | 'user_id'>;
 
 export const Card = ({ title, id, color, icon, description }: Props) => {
   const colorScheme = useColorScheme();

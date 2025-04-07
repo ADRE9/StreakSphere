@@ -10,8 +10,8 @@ export type THabit = {
   reminder_days: string[];
   last_checked_in: string;
   color: string;
-  created_at: string;
-  updated_at: string;
+  created_at: null;
+  updated_at: null;
 };
 
 export type HabitWithoutId = Omit<THabit, 'id'>;

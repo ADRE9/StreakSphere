@@ -30,10 +30,7 @@ const HabitList = observer(() => {
             reminder_time={item.reminder_time}
             reminder_days={item.reminder_days}
             last_checked_in={item.last_checked_in ?? ''}
-            created_at={item.created_at ?? ''}
-            updated_at={item.updated_at ?? ''}
             deleted={null}
-            user_id={''}
           />
         )}
       />

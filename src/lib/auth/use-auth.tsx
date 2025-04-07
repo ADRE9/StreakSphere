@@ -69,7 +69,6 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
         email,
         password,
       });
-      console.log('result', result);
       if (result.data?.session?.access_token) {
         setToken(result.data.session.access_token);
       }
