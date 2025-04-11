@@ -17,6 +17,7 @@ const HabitList = observer(() => {
       <FlashList
         estimatedItemSize={200}
         bounces
+        showsVerticalScrollIndicator={false}
         keyExtractor={(item) => item.id}
         data={habitKeyArray}
         renderItem={({ item }) => (

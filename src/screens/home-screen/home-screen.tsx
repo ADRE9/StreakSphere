@@ -22,7 +22,7 @@ const HomeScreen = () => {
       {isOpen && <Backdrop onPress={() => setIsOpen(false)} duration={500} />}
       <FabButton
         header="Add Habit"
-        raise="30%"
+        raise={40}
         panelStyle={{
           backgroundColor: colors.primary[500],
           left: '50%',
