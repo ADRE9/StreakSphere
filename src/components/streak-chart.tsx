@@ -24,23 +24,24 @@ const StreakChart = () => {
     console.log(date);
   };
   return (
-    <View className="mt-2  flex-1 flex-row flex-wrap items-center justify-center gap-2 rounded-xl bg-white p-5 dark:bg-neutral-900">
-      {streakData.map((item) =>
-        item.isEnabled ? (
-          <Pressable
-            onPress={() => handleDateStreakClick(item.day)}
-            key={item.key}
-            className="size-6 rounded-md  bg-gray-300 dark:bg-neutral-400"
-          />
-        ) : (
-          <Pressable
-            disabled
-            key={item.key}
-            className="size-6 rounded-md bg-gray-600 dark:bg-neutral-600 "
-          />
-        )
-      )}
-    </View>
+    <Pressable pointerEvents="box-none">
+      <View className="mt-2  flex-1 flex-row flex-wrap items-center justify-center gap-2 rounded-xl bg-white p-5 dark:bg-neutral-900">
+        {streakData.map((item) =>
+          item.isEnabled ? (
+            <Pressable
+              onPress={() => handleDateStreakClick(item.day)}
+              key={item.key}
+              className="size-6 rounded-md  bg-gray-300 dark:bg-neutral-400"
+            />
+          ) : (
+            <View
+              key={item.key}
+              className="size-6 rounded-md bg-gray-600 dark:bg-neutral-600"
+            />
+          )
+        )}
+      </View>
+    </Pressable>
   );
 };
 
