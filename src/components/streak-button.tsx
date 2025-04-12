@@ -37,7 +37,7 @@ const StreakButton = ({ maxStreak, color, habitId }: Props) => {
   const progressDots = dotCount * progress;
   const visibleLength =
     progressDots * (dashLength + gapLength) - STROKE_DASH_OFFSET;
-  console.log('progressDots', progressDots);
+
   const polarToCartesian = (
     cx: number,
     cy: number,
