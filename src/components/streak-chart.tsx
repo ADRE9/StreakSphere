@@ -1,3 +1,4 @@
+/* eslint-disable max-lines-per-function */
 import { computed } from '@legendapp/state';
 import { observer, use$ } from '@legendapp/state/react';
 import {
@@ -10,6 +11,7 @@ import {
 import React from 'react';
 
 import { Pressable, View } from '@/components/ui';
+import { createCheckIn, updateCheckIn } from '@/lib/state/check-in-actions';
 import { generateColorShades } from '@/lib/utils/color-utils';
 import { createSafeDateFromDay } from '@/lib/utils/create-safe-date-from-day';
 import { checkIns$, habits$ } from '@/utils/supa-legend';
@@ -63,8 +65,18 @@ const StreakChart = observer(({ habitId, color }: TStreakChart) => {
     return streakData;
   });
 
-  const handleDateStreakClick = (date: number) => {
-    console.log(date);
+  const handleDateStreakClick = (dt: number) => {
+    const date = createSafeDateFromDay(dt);
+    const checkedIns = monthlyCheckIns.find((checkIn) =>
+      isSameDay(new Date(checkIn.checked_at), date)
+    );
+    if (checkedIns?.frequency != null && checkedIns.frequency < max_streak) {
+      updateCheckIn(checkedIns.id, habitId, checkedIns.frequency + 1, date);
+    } else if (checkedIns?.frequency === max_streak) {
+      updateCheckIn(checkedIns.id, habitId, 0, date);
+    } else if (!checkedIns) {
+      createCheckIn(habitId, 1, date);
+    }
   };
   return (
     <Pressable pointerEvents="box-none">
