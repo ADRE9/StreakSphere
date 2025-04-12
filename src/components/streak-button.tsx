@@ -5,11 +5,8 @@ import Svg, { Path } from 'react-native-svg';
 
 import Icon from '@/components/icons';
 import { Pressable, View } from '@/components/ui';
-import {
-  createCheckIn,
-  getTodaysCheckInId,
-  updateCheckIn,
-} from '@/lib/state/check-in-actions';
+import { createCheckIn, updateCheckIn } from '@/lib/state/check-in-actions';
+import { getTodaysCheckInId } from '@/lib/utils/get-today-check-in-id';
 import { checkIns$, habits$ } from '@/utils/supa-legend';
 
 type Props = {
@@ -78,7 +75,6 @@ const StreakButton = observer(({ color, habitId }: Props) => {
     } else if (todaysCheckInId && currentStreak < maxStreak) {
       updateCheckIn(todaysCheckInId, habitId, currentStreak + 1);
     } else {
-      console.log('i am running!');
       createCheckIn(habitId, 1);
     }
   };
