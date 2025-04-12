@@ -1,5 +1,6 @@
 import 'react-native-get-random-values';
 
+import { format } from 'date-fns';
 import { v4 as uuidv4 } from 'uuid';
 
 import { checkIns$ } from '@/utils/supa-legend';
@@ -14,7 +15,7 @@ export const createCheckIn = (
     id,
     habit_id: habitId,
     frequency,
-    checked_at: date.toISOString(),
+    checked_at: format(date, 'yyyy-MM-dd'),
     created_at: null,
     updated_at: null,
     deleted: false,
@@ -28,11 +29,12 @@ export const updateCheckIn = (
   date: Date
   // eslint-disable-next-line max-params
 ) => {
+  console.log('Date', format(date, 'yyyy-MM-dd'));
   checkIns$[id].set({
     id,
     habit_id: habitId,
     frequency,
-    checked_at: date.toISOString(),
+    checked_at: format(date, 'yyyy-MM-dd'),
     updated_at: null,
     created_at: null,
     deleted: false,

@@ -1,26 +1,23 @@
-import Color from 'color';
+import chroma from 'chroma-js';
 
 /**
- * Generates an array of color shades from a base color
+ * Generates an array of color shades from a base color by varying saturation
  * @param hex - The base hex color code (e.g., "#000000")
  * @param numberOfShades - Number of shades to generate (excluding the base color)
- * @returns Array of hex color codes sorted from lightest to darkest
+ * @returns Array of hex color codes sorted from most saturated to least saturated
  */
 export function generateColorShades(
   hex: string,
   numberOfShades: number
 ): string[] {
-  const baseColor = Color(hex);
-  const shades: string[] = [];
+  // Create a color scale from the base color to its desaturated version
+  const light = chroma(hex).brighten(4).hex();
+  const base = chroma(hex).brighten(2).hex();
+  const dark = chroma(hex).hex();
 
-  // Generate shades with varying lightness
-  for (let i = 0; i <= numberOfShades; i++) {
-    // Calculate lightness value (0 to 100)
-    // We start from 100 (lightest) and go down to 0 (darkest)
-    const lightness = 100 - i * (100 / numberOfShades);
-    const shade = baseColor.lightness(lightness);
-    shades.push(shade.hex());
-  }
-
-  return shades;
+  // Generate evenly spaced colors along the scale
+  return chroma
+    .scale([light, base, dark])
+    .mode('lab') // Better perceptual scaling
+    .colors(numberOfShades + 1);
 }
