@@ -1,6 +1,5 @@
 import 'react-native-get-random-values';
 
-import { use$ } from '@legendapp/state/react';
 import { v4 as uuidv4 } from 'uuid';
 
 import { checkIns$ } from '@/utils/supa-legend';
@@ -49,8 +48,20 @@ export const deleteCheckIn = (id: string) => {
   });
 };
 
-export const getTodaysCheckInId = (habitId: string) => {
-  const checkIns = use$(checkIns$);
+type TCheckIn = Record<
+  string,
+  {
+    id: string;
+    checked_at: string | null;
+    created_at: string | null;
+    deleted: boolean | null;
+    frequency: number | null;
+    habit_id: string | null;
+    updated_at: string | null;
+  }
+>;
+
+export const getTodaysCheckInId = (habitId: string, checkIns: TCheckIn) => {
   const today = new Date();
   if (!checkIns) return null;
   const todaysCheckInId = Object.keys(checkIns).find((checkIn) => {

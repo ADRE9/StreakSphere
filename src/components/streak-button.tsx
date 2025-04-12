@@ -23,9 +23,9 @@ const SIZE = 40;
 const STROKE_DASH_OFFSET = 5;
 
 const StreakButton = observer(({ color, habitId }: Props) => {
-  const todaysCheckInId = getTodaysCheckInId(habitId);
-  const maxStreak = use$(habits$[habitId].streak_count);
   const checkIns = use$(checkIns$);
+  const todaysCheckInId = getTodaysCheckInId(habitId, checkIns);
+  const maxStreak = use$(habits$[habitId].streak_count);
   const currentStreak = todaysCheckInId
     ? (checkIns[todaysCheckInId]?.frequency ?? 0)
     : 0;
