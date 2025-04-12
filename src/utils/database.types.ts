@@ -36,7 +36,7 @@ export type Database = {
     Tables: {
       check_ins: {
         Row: {
-          checked_at: string | null;
+          checked_at: string;
           created_at: string | null;
           deleted: boolean | null;
           frequency: number | null;
@@ -45,7 +45,7 @@ export type Database = {
           updated_at: string | null;
         };
         Insert: {
-          checked_at?: string | null;
+          checked_at: string;
           created_at?: string | null;
           deleted?: boolean | null;
           frequency?: number | null;
@@ -54,7 +54,7 @@ export type Database = {
           updated_at?: string | null;
         };
         Update: {
-          checked_at?: string | null;
+          checked_at?: string;
           created_at?: string | null;
           deleted?: boolean | null;
           frequency?: number | null;

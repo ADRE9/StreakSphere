@@ -43,10 +43,10 @@ export const deleteCheckIn = (id: string) => {
   checkIns$[id].set({
     id,
     deleted: true,
-    updated_at: null,
-    checked_at: null,
+    checked_at: '',
     created_at: null,
-    frequency: checkIns$[id].get()?.frequency || null,
-    habit_id: checkIns$[id].get()?.habit_id || null,
+    frequency: null,
+    habit_id: null,
+    updated_at: null,
   });
 };
