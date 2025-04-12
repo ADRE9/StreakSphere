@@ -41,7 +41,7 @@ export const Card = ({ title, id, color, icon, description }: Props) => {
             </View>
             <StreakButton habitId={id} color={color} />
           </View>
-          <StreakChart />
+          <StreakChart habitId={id} color={color} />
         </BlurView>
       </Pressable>
     </Link>

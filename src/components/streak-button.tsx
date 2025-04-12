@@ -71,11 +71,11 @@ const StreakButton = observer(({ color, habitId }: Props) => {
 
   const handleCheckIn = () => {
     if (todaysCheckInId && currentStreak === maxStreak) {
-      updateCheckIn(todaysCheckInId, habitId, 0);
+      updateCheckIn(todaysCheckInId, habitId, 0, new Date());
     } else if (todaysCheckInId && currentStreak < maxStreak) {
-      updateCheckIn(todaysCheckInId, habitId, currentStreak + 1);
+      updateCheckIn(todaysCheckInId, habitId, currentStreak + 1, new Date());
     } else {
-      createCheckIn(habitId, 1);
+      createCheckIn(habitId, 1, new Date());
     }
   };
 
