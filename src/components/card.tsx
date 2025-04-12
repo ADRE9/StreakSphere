@@ -3,11 +3,11 @@ import { Link } from 'expo-router';
 import React from 'react';
 import { useColorScheme, View } from 'react-native';
 
+import Icon, { type IconName } from '@/components/icons';
+import StreakButton from '@/components/streak-button';
+import StreakChart from '@/components/streak-chart';
 import { Pressable, Text } from '@/components/ui';
 import { type THabit } from '@/types/habit';
-
-import Icon, { type IconName } from './icons';
-import StreakButton from './streak-button';
 
 type Props = Omit<THabit, 'created_at' | 'updated_at' | 'user_id'>;
 
@@ -41,7 +41,7 @@ export const Card = ({ title, id, color, icon, description }: Props) => {
             </View>
             <StreakButton habitId={id} color={color} />
           </View>
-          <View className="mt-2 h-[80] w-full flex-1 rounded-lg bg-black"></View>
+          <StreakChart />
         </BlurView>
       </Pressable>
     </Link>
