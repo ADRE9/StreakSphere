@@ -60,7 +60,6 @@ const StreakChart = observer(({ habitId, color }: TStreakChart) => {
         isEnabled: i <= getDate(new Date()),
       });
     }
-    // console.log(streakData);
     return streakData;
   });
 

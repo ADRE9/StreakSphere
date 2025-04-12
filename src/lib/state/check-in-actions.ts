@@ -29,7 +29,6 @@ export const updateCheckIn = (
   date: Date
   // eslint-disable-next-line max-params
 ) => {
-  console.log('Date', format(date, 'yyyy-MM-dd'));
   checkIns$[id].set({
     id,
     habit_id: habitId,
