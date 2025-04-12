@@ -4,11 +4,17 @@ import Svg, { Path } from 'react-native-svg';
 
 import Icon from '@/components/icons';
 import { Pressable, View } from '@/components/ui';
+import {
+  createCheckIn,
+  getTodaysCheckInId,
+  updateCheckIn,
+} from '@/lib/state/check-in-actions';
+import { checkIns$ } from '@/utils/supa-legend';
 
 type Props = {
   maxStreak: number;
-  currentStreak: number;
   color: string;
+  habitId: string;
 };
 
 const STROKE_WIDTH = 2;
@@ -16,7 +22,11 @@ const STROKE_BASE_COLOR = 'white';
 const SIZE = 40;
 const STROKE_DASH_OFFSET = 5;
 
-const StreakButton = ({ maxStreak, currentStreak, color }: Props) => {
+const StreakButton = ({ maxStreak, color, habitId }: Props) => {
+  const todaysCheckInId = getTodaysCheckInId(habitId);
+  const currentStreak = todaysCheckInId
+    ? (checkIns$[todaysCheckInId].get()?.frequency ?? 0)
+    : 0;
   const progress = currentStreak / maxStreak;
   const radius = SIZE / 2 - STROKE_WIDTH * 2;
   const strokeWidth = STROKE_WIDTH;
@@ -27,7 +37,7 @@ const StreakButton = ({ maxStreak, currentStreak, color }: Props) => {
   const progressDots = dotCount * progress;
   const visibleLength =
     progressDots * (dashLength + gapLength) - STROKE_DASH_OFFSET;
-
+  console.log('progressDots', progressDots);
   const polarToCartesian = (
     cx: number,
     cy: number,
@@ -56,8 +66,24 @@ const StreakButton = ({ maxStreak, currentStreak, color }: Props) => {
     radius
   );
 
+  const visibleLengthStreak = currentStreak === 0 ? 0 : visibleLength;
+  const visibleStrokeWidth = currentStreak === 0 ? 0 : strokeWidth + 0.5;
+
+  const handleCheckIn = () => {
+    if (todaysCheckInId && currentStreak === maxStreak) {
+      updateCheckIn(todaysCheckInId, habitId, 0);
+    } else if (todaysCheckInId && currentStreak < maxStreak) {
+      updateCheckIn(todaysCheckInId, habitId, currentStreak + 1);
+    } else {
+      createCheckIn(habitId, 1);
+    }
+  };
+
   return (
-    <Pressable className="size-[40] flex-row items-center justify-center">
+    <Pressable
+      onPress={handleCheckIn}
+      className="size-[40] flex-row items-center justify-center"
+    >
       <Svg
         className="absolute"
         width={SIZE + STROKE_WIDTH}
@@ -75,9 +101,9 @@ const StreakButton = ({ maxStreak, currentStreak, color }: Props) => {
         <Path
           d={d}
           stroke={color}
-          strokeWidth={strokeWidth + 0.5}
+          strokeWidth={visibleStrokeWidth}
           fill="none"
-          strokeDasharray={`${visibleLength}, ${circumference}`}
+          strokeDasharray={`${visibleLengthStreak}, ${circumference}`}
           strokeLinecap="round"
         />
       </Svg>

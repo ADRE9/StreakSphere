@@ -5,6 +5,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { type HabitWithoutId } from '@/types/habit';
 import { habits$ } from '@/utils/supa-legend';
 
+import { createCheckIn } from './check-in-actions';
+
 // Helper function to format time for Supabase
 function formatTimeForSupabase(date: Date | string | null): string {
   if (!date) return '00:00:00';
@@ -22,9 +24,11 @@ export const createHabit = (habit: HabitWithoutId) => {
     updated_at: null,
     deleted: false,
   });
+  createCheckIn(id, 0);
 };
 
 export const updateHabit = (id: string, habit: HabitWithoutId) => {
+  console.log('Updating--->');
   habits$[id].set({
     id,
     ...habit,

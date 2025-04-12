@@ -72,7 +72,6 @@ const AddHabitForm = ({ setIsOpen }: AddHabitFormProps) => {
       created_at: null,
       updated_at: null,
     };
-    console.log('habitObject', habitObject);
     createHabit(habitObject);
     setIsOpen(false);
   };
