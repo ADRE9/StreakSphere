@@ -16,6 +16,8 @@ function formatTimeForSupabase(date: Date | string | null): string {
 
 export const createHabit = (habit: HabitWithoutId) => {
   const id = uuidv4();
+
+  // Create the habit
   habits$[id].set({
     id,
     ...habit,
@@ -24,11 +26,24 @@ export const createHabit = (habit: HabitWithoutId) => {
     updated_at: null,
     deleted: false,
   });
-  createCheckIn(id, 0);
+
+  // Check for sync completion by monitoring created_at
+  const checkSync = () => {
+    const habitData = habits$[id].get();
+    if (habitData?.created_at) {
+      // Habit is synced, create the check-in
+      createCheckIn(id, 0);
+    } else {
+      // Not synced yet, check again in 100ms
+      setTimeout(checkSync, 100);
+    }
+  };
+
+  // Start checking for sync
+  checkSync();
 };
 
 export const updateHabit = (id: string, habit: HabitWithoutId) => {
-  console.log('Updating--->');
   habits$[id].set({
     id,
     ...habit,

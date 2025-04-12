@@ -1,4 +1,5 @@
 /* eslint-disable max-lines-per-function */
+import { observer, use$ } from '@legendapp/state/react';
 import React from 'react';
 import Svg, { Path } from 'react-native-svg';
 
@@ -9,10 +10,9 @@ import {
   getTodaysCheckInId,
   updateCheckIn,
 } from '@/lib/state/check-in-actions';
-import { checkIns$ } from '@/utils/supa-legend';
+import { checkIns$, habits$ } from '@/utils/supa-legend';
 
 type Props = {
-  maxStreak: number;
   color: string;
   habitId: string;
 };
@@ -22,11 +22,14 @@ const STROKE_BASE_COLOR = 'white';
 const SIZE = 40;
 const STROKE_DASH_OFFSET = 5;
 
-const StreakButton = ({ maxStreak, color, habitId }: Props) => {
+const StreakButton = observer(({ color, habitId }: Props) => {
   const todaysCheckInId = getTodaysCheckInId(habitId);
+  const maxStreak = use$(habits$[habitId].streak_count);
+  const checkIns = use$(checkIns$);
   const currentStreak = todaysCheckInId
-    ? (checkIns$[todaysCheckInId].get()?.frequency ?? 0)
+    ? (checkIns[todaysCheckInId]?.frequency ?? 0)
     : 0;
+
   const progress = currentStreak / maxStreak;
   const radius = SIZE / 2 - STROKE_WIDTH * 2;
   const strokeWidth = STROKE_WIDTH;
@@ -112,6 +115,6 @@ const StreakButton = ({ maxStreak, color, habitId }: Props) => {
       </View>
     </Pressable>
   );
-};
+});
 
 export default StreakButton;

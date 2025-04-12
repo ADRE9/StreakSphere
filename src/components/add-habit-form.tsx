@@ -37,7 +37,6 @@ const AddHabitForm = ({ setIsOpen }: AddHabitFormProps) => {
       frequency: 1,
     });
   const { user } = useAuth();
-
   const { control, handleSubmit } = useForm<FormType>({
     resolver: zodResolver(schema),
     mode: 'onChange',
@@ -59,6 +58,7 @@ const AddHabitForm = ({ setIsOpen }: AddHabitFormProps) => {
       });
       return;
     }
+
     const habitObject = {
       ...data,
       icon: selectedHabitFeature.icon as string,

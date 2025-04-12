@@ -39,7 +39,7 @@ export const Card = ({ title, id, color, icon, description }: Props) => {
                 {description}
               </Text>
             </View>
-            <StreakButton maxStreak={6} habitId={id} color={color} />
+            <StreakButton habitId={id} color={color} />
           </View>
           <View className="mt-2 h-[80] w-full flex-1 rounded-lg bg-black"></View>
         </BlurView>

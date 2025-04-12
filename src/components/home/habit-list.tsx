@@ -1,4 +1,4 @@
-import { observer } from '@legendapp/state/react';
+import { observer, use$ } from '@legendapp/state/react';
 import { FlashList } from '@shopify/flash-list';
 import React from 'react';
 import { View } from 'react-native';
@@ -7,7 +7,7 @@ import { Card } from '@/components/card';
 import { habits$ } from '@/utils/supa-legend';
 
 const HabitList = observer(() => {
-  const habits = habits$.get();
+  const habits = use$(habits$);
   if (!habits) return null;
 
   const habitKeyArray = Object.keys(habits).map((key) => habits[key]);

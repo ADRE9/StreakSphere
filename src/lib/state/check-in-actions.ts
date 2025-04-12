@@ -52,6 +52,7 @@ export const deleteCheckIn = (id: string) => {
 export const getTodaysCheckInId = (habitId: string) => {
   const checkIns = use$(checkIns$);
   const today = new Date();
+  if (!checkIns) return null;
   const todaysCheckInId = Object.keys(checkIns).find((checkIn) => {
     const checkInDate = checkIns[checkIn].checked_at;
     if (!checkInDate) return false;
