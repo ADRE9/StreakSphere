@@ -1,6 +1,6 @@
 /* eslint-disable max-lines-per-function */
 import { zodResolver } from '@hookform/resolvers/zod';
-import React, { useState } from 'react';
+import React, { type Dispatch, type SetStateAction, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { z } from 'zod';
@@ -25,7 +25,11 @@ export type THabitFeature = {
 
 type FormType = z.infer<typeof schema>;
 
-const AddHabitForm = () => {
+type AddHabitFormProps = {
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
+};
+
+const AddHabitForm = ({ setIsOpen }: AddHabitFormProps) => {
   const [selectedHabitFeature, setSelectedHabitFeature] =
     useState<THabitFeature>({
       icon: null,
@@ -59,7 +63,7 @@ const AddHabitForm = () => {
       ...data,
       icon: selectedHabitFeature.icon as string,
       color: selectedHabitFeature.color,
-      streak_count: 0,
+      streak_count: selectedHabitFeature.frequency,
       user_id: user!.id,
       deleted: false,
       reminder_time: new Date().toISOString(),
@@ -68,7 +72,9 @@ const AddHabitForm = () => {
       created_at: null,
       updated_at: null,
     };
+    console.log('habitObject', habitObject);
     createHabit(habitObject);
+    setIsOpen(false);
   };
 
   return (

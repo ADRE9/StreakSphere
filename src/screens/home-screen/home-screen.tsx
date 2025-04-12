@@ -34,7 +34,7 @@ const HomeScreen = () => {
         }}
         isOpen={isOpen}
       >
-        <AddHabitForm />
+        <AddHabitForm setIsOpen={setIsOpen} />
       </FabButton>
     </View>
   );

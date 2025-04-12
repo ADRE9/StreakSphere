@@ -1,7 +1,9 @@
+/* eslint-disable max-lines-per-function */
 import React from 'react';
 import Svg, { Path } from 'react-native-svg';
 
-import { View } from './ui';
+import Icon from '@/components/icons';
+import { Pressable, View } from '@/components/ui';
 
 type Props = {
   maxStreak: number;
@@ -55,9 +57,12 @@ const StreakButton = ({ maxStreak, currentStreak, color }: Props) => {
   );
 
   return (
-    <View>
-      <Svg width={SIZE} height={SIZE}>
-        {/* Base (all dots) */}
+    <Pressable className="size-[40] flex-row items-center justify-center">
+      <Svg
+        className="absolute"
+        width={SIZE + STROKE_WIDTH}
+        height={SIZE + STROKE_WIDTH}
+      >
         <Path
           d={d}
           stroke={STROKE_BASE_COLOR}
@@ -67,17 +72,19 @@ const StreakButton = ({ maxStreak, currentStreak, color }: Props) => {
           strokeLinecap="round"
         />
 
-        {/* Progress (colored dots) */}
         <Path
           d={d}
           stroke={color}
-          strokeWidth={strokeWidth}
+          strokeWidth={strokeWidth + 0.5}
           fill="none"
           strokeDasharray={`${visibleLength}, ${circumference}`}
           strokeLinecap="round"
         />
       </Svg>
-    </View>
+      <View className="absolute">
+        <Icon name="Plus" size={20} color={color} />
+      </View>
+    </Pressable>
   );
 };
 
