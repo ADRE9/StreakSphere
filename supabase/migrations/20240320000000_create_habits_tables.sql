@@ -178,19 +178,12 @@ CREATE POLICY "Users can update their own profile"
 CREATE OR REPLACE FUNCTION update_streak_count()
 RETURNS TRIGGER AS $$
 BEGIN
-  -- Update the habit's streak count and last_checked_in
+  -- Update only the last_checked_in timestamp
   UPDATE habits
   SET 
-    streak_count = streak_count + 1,
     last_checked_in = NEW.checked_at
   WHERE id = NEW.habit_id;
   
   RETURN NEW;
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
-
--- Create trigger for streak count updates
-CREATE TRIGGER update_streak_on_check_in
-  AFTER INSERT ON check_ins
-  FOR EACH ROW
-  EXECUTE FUNCTION update_streak_count(); 

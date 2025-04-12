@@ -78,6 +78,7 @@ const StreakButton = observer(({ color, habitId }: Props) => {
     } else if (todaysCheckInId && currentStreak < maxStreak) {
       updateCheckIn(todaysCheckInId, habitId, currentStreak + 1);
     } else {
+      console.log('i am running!');
       createCheckIn(habitId, 1);
     }
   };

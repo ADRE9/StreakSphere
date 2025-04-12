@@ -8,6 +8,7 @@ const now = new Date().toISOString();
 
 export const createCheckIn = (habitId: string, frequency: number) => {
   const id = uuidv4();
+  console.log('Create CheckIn', habitId, frequency);
   checkIns$[id].set({
     id,
     habit_id: habitId,

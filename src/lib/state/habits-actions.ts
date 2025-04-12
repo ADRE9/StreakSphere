@@ -5,8 +5,6 @@ import { v4 as uuidv4 } from 'uuid';
 import { type HabitWithoutId } from '@/types/habit';
 import { habits$ } from '@/utils/supa-legend';
 
-import { createCheckIn } from './check-in-actions';
-
 // Helper function to format time for Supabase
 function formatTimeForSupabase(date: Date | string | null): string {
   if (!date) return '00:00:00';
@@ -16,6 +14,7 @@ function formatTimeForSupabase(date: Date | string | null): string {
 
 export const createHabit = (habit: HabitWithoutId) => {
   const id = uuidv4();
+  console.log('Create Habit', habit);
 
   // Create the habit
   habits$[id].set({
@@ -26,21 +25,6 @@ export const createHabit = (habit: HabitWithoutId) => {
     updated_at: null,
     deleted: false,
   });
-
-  // Check for sync completion by monitoring created_at
-  const checkSync = () => {
-    const habitData = habits$[id].get();
-    if (habitData?.created_at) {
-      // Habit is synced, create the check-in
-      createCheckIn(id, 0);
-    } else {
-      // Not synced yet, check again in 100ms
-      setTimeout(checkSync, 100);
-    }
-  };
-
-  // Start checking for sync
-  checkSync();
 };
 
 export const updateHabit = (id: string, habit: HabitWithoutId) => {
