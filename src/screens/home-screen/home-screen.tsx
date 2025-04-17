@@ -21,6 +21,7 @@ const HomeScreen = () => {
       <HabitList />
       {isOpen && <Backdrop onPress={() => setIsOpen(false)} duration={500} />}
       <FabButton
+        isOpen={isOpen}
         header="Add Habit"
         raise={40}
         panelStyle={{
@@ -32,7 +33,6 @@ const HomeScreen = () => {
         onPress={() => {
           setIsOpen((prev) => !prev);
         }}
-        isOpen={isOpen}
       >
         <AddHabitForm setIsOpen={setIsOpen} />
       </FabButton>

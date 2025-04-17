@@ -25,7 +25,7 @@ export default function SignInScreen() {
       return;
     }
 
-    router.replace('/(app)');
+    router.replace('/(app)/(tabs)');
   };
 
   return (
