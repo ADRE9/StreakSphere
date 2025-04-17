@@ -14,6 +14,8 @@ function formatTimeForSupabase(date: Date | string | null): string {
 
 export const createHabit = (habit: HabitWithoutId) => {
   const id = uuidv4();
+
+  // Create the habit
   habits$[id].set({
     id,
     ...habit,

@@ -14,12 +14,13 @@ import React, {
   useState,
 } from 'react';
 
-import { type Session, supabase } from '../supabase';
+import { supabase } from '../supabase';
 
 type AuthState = {
-  user?: User;
+  user: User | null;
   isAuthenticated: boolean;
-  token?: Session['access_token'];
+  token: string | null;
+  isLoading: boolean;
 };
 
 type SignInProps = {
@@ -40,8 +41,9 @@ type AuthContextType = {
 
 const AuthContext = createContext<AuthContextType>({
   isAuthenticated: false,
-  user: undefined,
-  token: undefined,
+  user: null,
+  token: null,
+  isLoading: true,
   signIn: () => new Promise(() => ({})),
   signUp: () => new Promise(() => ({})),
   signOut: () => undefined,
@@ -60,78 +62,116 @@ export function useAuth() {
 }
 
 export const AuthProvider = ({ children }: PropsWithChildren) => {
-  const [token, setToken] = useState<AuthState['token']>(undefined);
-  const [user, setUser] = useState<AuthState['user']>(undefined);
+  const [state, setState] = useState<AuthState>({
+    user: null,
+    isAuthenticated: false,
+    token: null,
+    isLoading: true,
+  });
 
-  const signIn = useCallback(
-    async ({ email, password }: SignInProps) => {
-      const result = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-      if (result.data?.session?.access_token) {
-        setToken(result.data.session.access_token);
-      }
+  const signIn = useCallback(async ({ email, password }: SignInProps) => {
+    const result = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
 
-      if (result.data?.user) {
-        setUser(result.data.user);
-      }
+    const session = result.data?.session;
+    const user = result.data?.user;
 
-      return result;
-    },
-    [supabase]
-  );
+    if (session?.access_token && user) {
+      setState((prev) => ({
+        ...prev,
+        token: session.access_token,
+        user,
+        isAuthenticated: true,
+      }));
+    }
+
+    return result;
+  }, []);
 
   const signOut = useCallback(async () => {
     await supabase.auth.signOut();
-    setToken(undefined);
-  }, [supabase]);
+    setState({
+      user: null,
+      isAuthenticated: false,
+      token: null,
+      isLoading: false,
+    });
+  }, []);
 
-  const signUp = useCallback(
-    async ({ email, password }: SignUpProps) => {
-      const result = await supabase.auth.signUp({
-        email,
-        password,
-      });
+  const signUp = useCallback(async ({ email, password }: SignUpProps) => {
+    const result = await supabase.auth.signUp({
+      email,
+      password,
+    });
 
-      if (result.data?.session?.access_token) {
-        setToken(result.data.session.access_token);
-      }
+    const session = result.data?.session;
+    const user = result.data?.user;
 
-      return result;
-    },
-    [supabase]
-  );
+    if (session?.access_token && user) {
+      setState((prev) => ({
+        ...prev,
+        token: session.access_token,
+        user,
+        isAuthenticated: true,
+      }));
+    }
+
+    return result;
+  }, []);
 
   useEffect(() => {
+    // Get initial session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session) {
+        setState({
+          user: session.user,
+          isAuthenticated: true,
+          token: session.access_token,
+          isLoading: false,
+        });
+      } else {
+        setState((prev) => ({ ...prev, isLoading: false }));
+      }
+    });
+
+    // Listen for auth changes
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((event, session) => {
       switch (event) {
-        case 'SIGNED_OUT':
-          setToken(undefined);
-          break;
-        case 'INITIAL_SESSION':
         case 'SIGNED_IN':
         case 'TOKEN_REFRESHED':
-          setToken(session?.access_token);
+          setState({
+            user: session?.user ?? null,
+            isAuthenticated: true,
+            token: session?.access_token ?? null,
+            isLoading: false,
+          });
+          break;
+        case 'SIGNED_OUT':
+          setState({
+            user: null,
+            isAuthenticated: false,
+            token: null,
+            isLoading: false,
+          });
           break;
         default:
-        // no-op
+          setState((prev) => ({ ...prev, isLoading: false }));
       }
     });
 
     return () => {
       subscription.unsubscribe();
     };
-  }, [supabase]);
+  }, []);
 
   return (
     <AuthContext.Provider
       value={{
-        isAuthenticated: !!token,
-        token,
-        user,
+        ...state,
         signIn,
         signUp,
         signOut,

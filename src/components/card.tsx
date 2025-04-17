@@ -3,17 +3,18 @@ import { Link } from 'expo-router';
 import React from 'react';
 import { useColorScheme, View } from 'react-native';
 
+import Icon, { type IconName } from '@/components/icons';
+import StreakButton from '@/components/streak-button';
+import StreakChart from '@/components/streak-chart';
 import { Pressable, Text } from '@/components/ui';
 import { type THabit } from '@/types/habit';
-
-import Icon, { type IconName } from './icons';
 
 type Props = Omit<THabit, 'created_at' | 'updated_at' | 'user_id'>;
 
 export const Card = ({ title, id, color, icon, description }: Props) => {
   const colorScheme = useColorScheme();
   return (
-    <Link href={`/feed/${id}`} asChild>
+    <Link href={`/(app)/(habit)/${id}`} asChild>
       <Pressable className="mx-4 my-2 overflow-hidden rounded-xl dark:border dark:border-neutral-500">
         <BlurView
           experimentalBlurMethod={'dimezisBlurView'}
@@ -38,9 +39,9 @@ export const Card = ({ title, id, color, icon, description }: Props) => {
                 {description}
               </Text>
             </View>
-            <View className="size-12 rounded-full bg-black"></View>
+            <StreakButton habitId={id} color={color} />
           </View>
-          <View className="mt-2 h-[80] w-full flex-1 rounded-lg bg-black"></View>
+          <StreakChart habitId={id} color={color} />
         </BlurView>
       </Pressable>
     </Link>

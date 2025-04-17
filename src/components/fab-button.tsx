@@ -31,7 +31,7 @@ export type FabButtonProps = {
   children: React.ReactNode;
   panelStyle?: ViewStyle;
   duration?: number;
-  raise?: string;
+  raise?: number;
   header?: string;
   openedSize?: number;
   closedSize?: number;
@@ -70,7 +70,7 @@ export function FabButton({
         {
           width: isOpen ? openedSize : closedSize,
           height: isOpen ? 'auto' : closedSize,
-          bottom: typeof raise === 'string' && isOpen ? Number(raise) : 80,
+          bottom: raise && isOpen ? `${raise}%` : 80,
           borderRadius: closedSize / 2,
           padding: spacing,
         },

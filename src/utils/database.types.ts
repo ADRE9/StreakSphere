@@ -36,7 +36,7 @@ export type Database = {
     Tables: {
       check_ins: {
         Row: {
-          checked_at: string | null;
+          checked_at: string;
           created_at: string | null;
           deleted: boolean | null;
           frequency: number | null;
@@ -45,7 +45,7 @@ export type Database = {
           updated_at: string | null;
         };
         Insert: {
-          checked_at?: string | null;
+          checked_at: string;
           created_at?: string | null;
           deleted?: boolean | null;
           frequency?: number | null;
@@ -54,7 +54,7 @@ export type Database = {
           updated_at?: string | null;
         };
         Update: {
-          checked_at?: string | null;
+          checked_at?: string;
           created_at?: string | null;
           deleted?: boolean | null;
           frequency?: number | null;
@@ -81,8 +81,8 @@ export type Database = {
           icon: string;
           id: string;
           last_checked_in: string | null;
-          reminder_days: string[];
-          reminder_time: string;
+          reminder_days: string[] | null;
+          reminder_time: string | null;
           streak_count: number;
           title: string;
           updated_at: string | null;
@@ -93,11 +93,11 @@ export type Database = {
           created_at?: string | null;
           deleted?: boolean | null;
           description?: string | null;
-          icon: string;
+          icon?: string;
           id?: string;
           last_checked_in?: string | null;
-          reminder_days: string[];
-          reminder_time: string;
+          reminder_days?: string[] | null;
+          reminder_time?: string | null;
           streak_count?: number;
           title: string;
           updated_at?: string | null;
@@ -111,12 +111,39 @@ export type Database = {
           icon?: string;
           id?: string;
           last_checked_in?: string | null;
-          reminder_days?: string[];
-          reminder_time?: string;
+          reminder_days?: string[] | null;
+          reminder_time?: string | null;
           streak_count?: number;
           title?: string;
           updated_at?: string | null;
           user_id?: string | null;
+        };
+        Relationships: [];
+      };
+      profiles: {
+        Row: {
+          avatar_url: string | null;
+          created_at: string | null;
+          full_name: string | null;
+          id: string;
+          updated_at: string | null;
+          username: string | null;
+        };
+        Insert: {
+          avatar_url?: string | null;
+          created_at?: string | null;
+          full_name?: string | null;
+          id: string;
+          updated_at?: string | null;
+          username?: string | null;
+        };
+        Update: {
+          avatar_url?: string | null;
+          created_at?: string | null;
+          full_name?: string | null;
+          id?: string;
+          updated_at?: string | null;
+          username?: string | null;
         };
         Relationships: [];
       };
