@@ -16,6 +16,16 @@ const EditHabitScreen = () => {
       title: habit?.title,
       description: habit?.description ?? '',
       icon: habit?.icon as IconName,
+      reminder_time: habit?.reminder_time ?? '',
+      reminder_days: (habit?.reminder_days ?? []) as (
+        | 'mon'
+        | 'tue'
+        | 'wed'
+        | 'thu'
+        | 'fri'
+        | 'sat'
+        | 'sun'
+      )[],
       color: habit?.color,
       streak_count: habit?.streak_count,
     };

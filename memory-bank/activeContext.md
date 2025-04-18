@@ -11,9 +11,6 @@ Implementing local-first data management with Supabase and Legend State
 - Set up Legend State with MMKV storage
 - Created TypeScript types for database schema
 - Implemented local-first data operations
-- Implemented reusable HabitForm component with add/edit modes
-- Added FAB state management using Legend State
-- Improved form validation and type safety
 
 ## Active Decisions
 
@@ -25,23 +22,10 @@ Implementing local-first data management with Supabase and Legend State
    - Setting up RLS policies
 
 2. Local-First Implementation
-
    - Using Legend State for reactivity
    - MMKV for persistence
    - Real-time sync with Supabase
    - Offline queue management
-
-3. HabitForm Component
-
-   - Made HabitForm reusable with 'add' and 'edit' modes
-   - Added proper TypeScript types and validation
-   - Improved error handling and user feedback
-   - Integrated with FAB state management
-
-4. FAB State Management
-   - Implemented using Legend State
-   - Added actions for open, close, and toggle
-   - Integrated with form components
 
 ## Next Steps
 

@@ -1,5 +1,6 @@
 /* eslint-disable max-lines-per-function */
 import { zodResolver } from '@hookform/resolvers/zod';
+import { setHours, setMinutes } from 'date-fns';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
@@ -9,11 +10,27 @@ import ColorCard from '@/components/color-card';
 import FrequencyCounter from '@/components/frequency-counter';
 import IconCard from '@/components/icon-card';
 import { type IconName } from '@/components/icons';
+import ReminderSettings, { type DayId } from '@/components/reminder-settings';
 import { Button, ControlledInput, Text, View } from '@/components/ui';
 import { useAuth } from '@/lib/auth/use-auth';
 import { closeFab } from '@/lib/state/fab-actions';
 import { createHabit, updateHabit } from '@/lib/state/habits-actions';
 import type { HabitWithoutId } from '@/types/habit';
+
+const DEFAULT_REMINDER_DAYS: DayId[] = [
+  'mon',
+  'tue',
+  'wed',
+  'thu',
+  'fri',
+  'sat',
+  'sun',
+];
+// Set default reminder time to 12:00 PM
+const DEFAULT_REMINDER_TIME = setHours(
+  setMinutes(new Date(), 0),
+  12
+).toISOString();
 
 const schema = z.object({
   title: z.string().min(1, 'Habit name is required'),
@@ -35,6 +52,8 @@ export type TInitialData = {
   icon: IconName;
   color: string;
   streak_count: number;
+  reminder_days: DayId[];
+  reminder_time: string;
 };
 
 type HabitFormProps = {
@@ -49,6 +68,14 @@ const HabitForm = ({ mode, initialData }: HabitFormProps) => {
       color: initialData?.color ?? null,
       frequency: initialData?.streak_count ?? 1,
     });
+
+  const [reminderDays, setReminderDays] = useState<DayId[]>(
+    initialData?.reminder_days ?? DEFAULT_REMINDER_DAYS
+  );
+
+  const [reminderTime, setReminderTime] = useState<string>(
+    initialData?.reminder_time ?? DEFAULT_REMINDER_TIME
+  );
 
   const { user } = useAuth();
   const { control, handleSubmit } = useForm<FormType>({
@@ -85,8 +112,8 @@ const HabitForm = ({ mode, initialData }: HabitFormProps) => {
       streak_count: selectedHabitFeature.frequency,
       user_id: user!.id,
       deleted: false,
-      reminder_time: new Date().toISOString(),
-      reminder_days: ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'],
+      reminder_time: mode === 'edit' ? reminderTime : DEFAULT_REMINDER_TIME,
+      reminder_days: mode === 'edit' ? reminderDays : DEFAULT_REMINDER_DAYS,
       last_checked_in: new Date().toISOString(),
       created_at: null,
       updated_at: null,
@@ -105,7 +132,7 @@ const HabitForm = ({ mode, initialData }: HabitFormProps) => {
     <View>
       {mode === 'add' && (
         <Text className="mb-2">
-          "Let's get started. Add a habit to your life."
+          Let's get started. Add a habit to your life.
         </Text>
       )}
       <ControlledInput
@@ -130,6 +157,14 @@ const HabitForm = ({ mode, initialData }: HabitFormProps) => {
         selectedFrequency={selectedHabitFeature.frequency}
         setSelectedFrequency={setSelectedHabitFeature}
       />
+      {mode === 'edit' && (
+        <ReminderSettings
+          selectedDays={reminderDays}
+          reminderTime={reminderTime}
+          onDaysChange={setReminderDays}
+          onTimeChange={setReminderTime}
+        />
+      )}
       <Button variant="outline" onPress={handleSubmit(onSubmit)}>
         <Text>{mode === 'add' ? 'Add habit' : 'Update habit'}</Text>
       </Button>
