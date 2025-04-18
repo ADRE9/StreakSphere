@@ -1,7 +1,7 @@
 import React, { type Dispatch, type SetStateAction } from 'react';
 import { Pressable, Text, View } from 'react-native';
 
-import { type THabitFeature } from './add-habit-form';
+import { type THabitFeature } from './habit-form';
 
 type TFrequencyCounterProps = {
   selectedFrequency: number | null;

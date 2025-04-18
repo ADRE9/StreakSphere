@@ -2,10 +2,10 @@ import { use$ } from '@legendapp/state/react';
 import React from 'react';
 import { useColorScheme, View } from 'react-native';
 
-import AddHabitForm from '@/components/add-habit-form';
 import Backdrop from '@/components/backdrop';
 import BgDoodleImage from '@/components/bg-doodle-image';
 import { FabButton } from '@/components/fab-button';
+import HabitForm from '@/components/habit-form';
 import Banner from '@/components/home/banner';
 import HabitList from '@/components/home/habit-list';
 import Header from '@/components/home/header';
@@ -32,7 +32,7 @@ const HomeScreen = () => {
         }}
         duration={500}
       >
-        <AddHabitForm />
+        <HabitForm mode="add" />
       </FabButton>
     </View>
   );

@@ -1,7 +1,7 @@
 import React, { type Dispatch, type SetStateAction } from 'react';
 import { Pressable, ScrollView } from 'react-native';
 
-import { type THabitFeature } from './add-habit-form';
+import { type THabitFeature } from './habit-form';
 
 const COLORS_LIST = [
   { key: '01', name: '#FF6B6B' }, // Coral Red

@@ -1,7 +1,7 @@
 import React, { type Dispatch, type SetStateAction } from 'react';
 import { useColorScheme } from 'react-native';
 
-import { type THabitFeature } from './add-habit-form';
+import { type THabitFeature } from './habit-form';
 import Icon, { type IconName } from './icons';
 import { Pressable, View } from './ui';
 

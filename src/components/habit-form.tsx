@@ -12,7 +12,8 @@ import { type IconName } from '@/components/icons';
 import { Button, ControlledInput, Text, View } from '@/components/ui';
 import { useAuth } from '@/lib/auth/use-auth';
 import { closeFab } from '@/lib/state/fab-actions';
-import { createHabit } from '@/lib/state/habits-actions';
+import { createHabit, updateHabit } from '@/lib/state/habits-actions';
+import type { HabitWithoutId } from '@/types/habit';
 
 const schema = z.object({
   title: z.string().min(1, 'Habit name is required'),
@@ -27,24 +28,37 @@ export type THabitFeature = {
 
 type FormType = z.infer<typeof schema>;
 
-const AddHabitForm = () => {
+type HabitFormProps = {
+  mode: 'add' | 'edit';
+  initialData?: {
+    id: string;
+    title: string;
+    description: string;
+    icon: IconName;
+    color: string;
+    streak_count: number;
+  };
+};
+
+const HabitForm = ({ mode, initialData }: HabitFormProps) => {
   const [selectedHabitFeature, setSelectedHabitFeature] =
     useState<THabitFeature>({
-      icon: null,
-      color: null,
-      frequency: 1,
+      icon: initialData?.icon ?? null,
+      color: initialData?.color ?? null,
+      frequency: initialData?.streak_count ?? 1,
     });
+
   const { user } = useAuth();
   const { control, handleSubmit } = useForm<FormType>({
     resolver: zodResolver(schema),
     mode: 'onChange',
     defaultValues: {
-      title: '',
-      description: '',
+      title: initialData?.title ?? '',
+      description: initialData?.description ?? '',
     },
   });
 
-  const onSubmit = (data: FormType) => {
+  const validateFeatures = () => {
     if (
       !selectedHabitFeature.icon ||
       !selectedHabitFeature.color ||
@@ -54,13 +68,18 @@ const AddHabitForm = () => {
         type: 'error',
         text1: 'Please select all features',
       });
-      return;
+      return false;
     }
+    return true;
+  };
 
-    const habitObject = {
+  const onSubmit = (data: FormType) => {
+    if (!validateFeatures()) return;
+
+    const habitObject: HabitWithoutId = {
       ...data,
       icon: selectedHabitFeature.icon as string,
-      color: selectedHabitFeature.color,
+      color: selectedHabitFeature.color as string,
       streak_count: selectedHabitFeature.frequency,
       user_id: user!.id,
       deleted: false,
@@ -70,13 +89,23 @@ const AddHabitForm = () => {
       created_at: null,
       updated_at: null,
     };
-    createHabit(habitObject);
+
+    if (mode === 'edit' && initialData) {
+      updateHabit(initialData.id, habitObject);
+    } else {
+      createHabit(habitObject);
+    }
+
     closeFab();
   };
 
   return (
     <View>
-      <Text className="mb-2">Let's get started. Add a habit to your life.</Text>
+      <Text className="mb-2">
+        {mode === 'add'
+          ? "Let's get started. Add a habit to your life."
+          : 'Edit your habit details.'}
+      </Text>
       <ControlledInput
         placeholder="*Habit name (Drink water,Exercise,etc)"
         name="title"
@@ -100,10 +129,10 @@ const AddHabitForm = () => {
         setSelectedFrequency={setSelectedHabitFeature}
       />
       <Button variant="outline" onPress={handleSubmit(onSubmit)}>
-        <Text>Add habit</Text>
+        <Text>{mode === 'add' ? 'Add habit' : 'Update habit'}</Text>
       </Button>
     </View>
   );
 };
 
-export default AddHabitForm;
+export default HabitForm;
