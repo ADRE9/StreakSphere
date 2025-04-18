@@ -1,16 +1,19 @@
+import { use$ } from '@legendapp/state/react';
 import { format } from 'date-fns';
 import { useLocalSearchParams } from 'expo-router';
-import React, { useState } from 'react';
+import React from 'react';
 import { type ColorValue } from 'react-native';
 
 import Backdrop from '@/components/backdrop';
 import { FabButton } from '@/components/fab-button';
 import StreakChart from '@/components/streak-chart';
 import { colors, Text, View } from '@/components/ui';
+import { fabState$, toggleFab } from '@/lib/state/fab-actions';
 import { habits$ } from '@/utils/supa-legend';
+
 const EditHabitScreen = () => {
   const { id, color } = useLocalSearchParams();
-  const [isOpen, setIsOpen] = useState(false);
+  const isOpen = use$(fabState$.isOpen);
 
   const habit = habits$.get()[id as string];
   return (
@@ -58,11 +61,9 @@ const EditHabitScreen = () => {
         </View>
       </View>
 
-      {isOpen && <Backdrop onPress={() => setIsOpen(false)} duration={500} />}
+      {isOpen && <Backdrop onPress={() => toggleFab()} duration={500} />}
       <FabButton
         header="Edit Habit"
-        isOpen={isOpen}
-        onPress={() => setIsOpen(!isOpen)}
         panelStyle={{
           backgroundColor: colors.primary[500],
           left: '50%',

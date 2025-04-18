@@ -1,5 +1,6 @@
 /* eslint-disable max-lines-per-function */
 import { Entypo } from '@expo/vector-icons';
+import { use$ } from '@legendapp/state/react';
 import {
   Dimensions,
   StyleSheet,
@@ -18,6 +19,8 @@ import Animated, {
   useAnimatedStyle,
 } from 'react-native-reanimated';
 
+import { fabState$, toggleFab } from '@/lib/state/fab-actions';
+
 import { Text } from './ui';
 
 const AnimatedEntypo = Animated.createAnimatedComponent(Entypo);
@@ -26,8 +29,6 @@ const { width } = Dimensions.get('window');
 const _defaultDuration = 500;
 
 export type FabButtonProps = {
-  onPress: () => void;
-  isOpen: boolean;
   children: React.ReactNode;
   panelStyle?: ViewStyle;
   duration?: number;
@@ -38,8 +39,6 @@ export type FabButtonProps = {
 };
 
 export function FabButton({
-  onPress,
-  isOpen,
   panelStyle,
   raise,
   children,
@@ -51,6 +50,7 @@ export function FabButton({
   const spacing = closedSize * 0.2;
   const closeIconSize = closedSize * 0.3;
   const openIconSize = closedSize * 0.5;
+  const isOpen = use$(fabState$.isOpen);
   const { height: keyboardHeight, state } = useAnimatedKeyboard();
 
   const keyboardHeightStyle = useAnimatedStyle(() => {
@@ -79,7 +79,7 @@ export function FabButton({
       // Use Layout if you're using an old version of Reanimated
       layout={LinearTransition.duration(duration)}
     >
-      <TouchableWithoutFeedback onPress={onPress}>
+      <TouchableWithoutFeedback onPress={toggleFab}>
         <Animated.View
           style={{
             justifyContent: 'center',

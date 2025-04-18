@@ -1,6 +1,6 @@
 /* eslint-disable max-lines-per-function */
 import { zodResolver } from '@hookform/resolvers/zod';
-import React, { type Dispatch, type SetStateAction, useState } from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { z } from 'zod';
@@ -11,7 +11,9 @@ import IconCard from '@/components/icon-card';
 import { type IconName } from '@/components/icons';
 import { Button, ControlledInput, Text, View } from '@/components/ui';
 import { useAuth } from '@/lib/auth/use-auth';
+import { closeFab } from '@/lib/state/fab-actions';
 import { createHabit } from '@/lib/state/habits-actions';
+
 const schema = z.object({
   title: z.string().min(1, 'Habit name is required'),
   description: z.string().min(1, 'Description is required'),
@@ -25,11 +27,7 @@ export type THabitFeature = {
 
 type FormType = z.infer<typeof schema>;
 
-type AddHabitFormProps = {
-  setIsOpen: Dispatch<SetStateAction<boolean>>;
-};
-
-const AddHabitForm = ({ setIsOpen }: AddHabitFormProps) => {
+const AddHabitForm = () => {
   const [selectedHabitFeature, setSelectedHabitFeature] =
     useState<THabitFeature>({
       icon: null,
@@ -73,7 +71,7 @@ const AddHabitForm = ({ setIsOpen }: AddHabitFormProps) => {
       updated_at: null,
     };
     createHabit(habitObject);
-    setIsOpen(false);
+    closeFab();
   };
 
   return (
