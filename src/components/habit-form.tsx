@@ -28,16 +28,18 @@ export type THabitFeature = {
 
 type FormType = z.infer<typeof schema>;
 
+export type TInitialData = {
+  id: string;
+  title: string;
+  description: string;
+  icon: IconName;
+  color: string;
+  streak_count: number;
+};
+
 type HabitFormProps = {
   mode: 'add' | 'edit';
-  initialData?: {
-    id: string;
-    title: string;
-    description: string;
-    icon: IconName;
-    color: string;
-    streak_count: number;
-  };
+  initialData?: TInitialData;
 };
 
 const HabitForm = ({ mode, initialData }: HabitFormProps) => {
@@ -101,11 +103,11 @@ const HabitForm = ({ mode, initialData }: HabitFormProps) => {
 
   return (
     <View>
-      <Text className="mb-2">
-        {mode === 'add'
-          ? "Let's get started. Add a habit to your life."
-          : 'Edit your habit details.'}
-      </Text>
+      {mode === 'add' && (
+        <Text className="mb-2">
+          "Let's get started. Add a habit to your life."
+        </Text>
+      )}
       <ControlledInput
         placeholder="*Habit name (Drink water,Exercise,etc)"
         name="title"

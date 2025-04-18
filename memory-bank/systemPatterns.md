@@ -234,3 +234,96 @@ This structure ensures:
 - Consistent component organization
 - Maintainable codebase
 - Scalable architecture
+
+## Component Patterns
+
+### Form Components
+
+1. Reusable Form Pattern
+
+   ```typescript
+   type FormProps = {
+     mode: 'add' | 'edit';
+     initialData?: FormData;
+   };
+   ```
+
+   - Components accept mode prop for different behaviors
+   - Optional initialData for edit mode
+   - Consistent validation using zod
+   - Type-safe form handling with react-hook-form
+
+2. Form State Management
+   - Use react-hook-form for form state
+   - Zod schema validation
+   - Controlled inputs with proper types
+   - Toast messages for user feedback
+
+### State Management with Legend State
+
+1. Observable Pattern
+
+   ```typescript
+   const state$ = observable({
+     value: initialValue,
+   });
+   ```
+
+2. Usage Patterns
+
+   - `.get()`: For one-time value reads in event handlers
+   - `use$`: For reactive values in components
+   - `observer()`: For components using multiple observables
+
+3. Action Pattern
+   ```typescript
+   const actions = {
+     action1: () => state$.value.set(newValue),
+     action2: () => state$.value.set((prev) => !prev),
+   };
+   ```
+
+## Data Flow
+
+1. Form Submission
+
+   - Validate input data
+   - Transform to correct shape
+   - Submit to backend
+   - Show feedback
+   - Update local state
+
+2. State Updates
+   - Use Legend State observables
+   - Update through actions
+   - Reactive UI updates
+   - Error handling with Toast
+
+## Error Handling
+
+1. Form Validation
+
+   - Zod schema validation
+   - Custom validation functions
+   - User feedback via Toast
+   - Type-safe error messages
+
+2. API Error Handling
+   - Toast messages for user feedback
+   - Type-safe error responses
+   - Consistent error patterns
+
+## Component Architecture
+
+1. Reusable Components
+
+   - Accept mode props
+   - Handle multiple use cases
+   - Consistent prop types
+   - Clear documentation
+
+2. State Management
+   - Legend State for global state
+   - React Hook Form for form state
+   - Toast for notifications
+   - Type-safe state updates

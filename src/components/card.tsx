@@ -1,4 +1,5 @@
 import { BlurView } from 'expo-blur';
+import { router } from 'expo-router';
 import React from 'react';
 import { useColorScheme, View } from 'react-native';
 
@@ -6,7 +7,6 @@ import Icon, { type IconName } from '@/components/icons';
 import StreakButton from '@/components/streak-button';
 import StreakChart from '@/components/streak-chart';
 import { Text } from '@/components/ui';
-import { openFab } from '@/lib/state/fab-actions';
 import { type THabit } from '@/types/habit';
 
 import {
@@ -55,7 +55,15 @@ export const Card = ({ title, id, color, icon, description }: Props) => {
         </View>
       </ContextMenuTrigger>
       <ContextMenuContent>
-        <ContextMenuItem onSelect={openFab} key="edit">
+        <ContextMenuItem
+          onSelect={() =>
+            router.push({
+              pathname: '/(app)/(habit)/[id]',
+              params: { id },
+            })
+          }
+          key="edit"
+        >
           <ContextMenuItemTitle>Edit</ContextMenuItemTitle>
         </ContextMenuItem>
         <ContextMenuItem key="delete" destructive>

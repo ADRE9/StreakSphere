@@ -15,6 +15,7 @@ import { closeFab, fabState$ } from '@/lib/state/fab-actions';
 const HomeScreen = () => {
   const colorScheme = useColorScheme();
   const isOpen = use$(fabState$.isOpen);
+
   return (
     <View className="flex-1 bg-blue-100 dark:bg-charcoal-800">
       <BgDoodleImage colorScheme={colorScheme ?? 'light'} />
