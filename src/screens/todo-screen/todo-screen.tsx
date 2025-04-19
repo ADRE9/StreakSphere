@@ -20,7 +20,6 @@ import {
 } from '@/components/ui';
 import { closeFab, fabState$ } from '@/lib/state/fab-actions';
 import { addTodo, todoState$, toggleTodo } from '@/lib/state/todo-actions';
-
 const _spacing = 20;
 
 const todoSchema = z.object({
@@ -112,7 +111,7 @@ const TodoScreen = observer(() => {
         panelStyle={{
           backgroundColor: colors.primary[500],
           left: '50%',
-          transform: [{ translateX: '-50%' }, { translateY: '40%' }],
+          transform: [{ translateX: '-50%' }, { translateY: '30%' }],
         }}
         duration={500}
       >

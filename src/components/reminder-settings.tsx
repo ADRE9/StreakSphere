@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import { Platform, Switch } from 'react-native';
 
 import { Button, Text, View } from '@/components/ui';
+import { dateToTimeString, timeStringToDate } from '@/lib/utils/date-utils';
 
 const DAYS = [
   { id: 'mon', label: 'Mon' },
@@ -33,7 +34,7 @@ const ReminderSettings = observer(
     onTimeChange,
   }: ReminderSettingsProps) => {
     const [showTimePicker, setShowTimePicker] = useState(false);
-    const currentTime = new Date(reminderTime);
+    const currentTime = timeStringToDate(reminderTime);
 
     const toggleDay = (dayId: DayId) => {
       const newDays = selectedDays.includes(dayId)
@@ -45,7 +46,7 @@ const ReminderSettings = observer(
     const handleTimeChange = (_: any, selectedTime: Date | undefined) => {
       setShowTimePicker(Platform.OS === 'ios');
       if (selectedTime) {
-        onTimeChange(selectedTime.toISOString());
+        onTimeChange(dateToTimeString(selectedTime));
       }
     };
 
