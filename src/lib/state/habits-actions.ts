@@ -41,19 +41,6 @@ export const deleteHabit = (id: string) => {
   const existingHabit = habits$[id].get();
   if (!existingHabit) return;
 
-  habits$[id].set({
-    id,
-    deleted: true,
-    title: existingHabit.title,
-    description: existingHabit.description,
-    streak_count: existingHabit.streak_count,
-    last_checked_in: existingHabit.last_checked_in,
-    user_id: existingHabit.user_id || '',
-    color: existingHabit.color,
-    icon: existingHabit.icon,
-    reminder_days: existingHabit.reminder_days,
-    reminder_time: formatTimeForSupabase(existingHabit.reminder_time),
-    created_at: null,
-    updated_at: null,
-  });
+  // Perform a hard delete
+  habits$[id].delete();
 };

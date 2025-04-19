@@ -7,6 +7,7 @@ import Icon, { type IconName } from '@/components/icons';
 import StreakButton from '@/components/streak-button';
 import StreakChart from '@/components/streak-chart';
 import { Text } from '@/components/ui';
+import { deleteHabit } from '@/lib/state/habits-actions';
 import { type THabit } from '@/types/habit';
 
 import {
@@ -69,7 +70,11 @@ export const Card = ({ title, id, color, icon, description }: TCardProps) => {
         >
           <ContextMenuItemTitle>Edit</ContextMenuItemTitle>
         </ContextMenuItem>
-        <ContextMenuItem key="delete" destructive>
+        <ContextMenuItem
+          onSelect={() => deleteHabit(id)}
+          key="delete"
+          destructive
+        >
           <ContextMenuItemTitle>Delete</ContextMenuItemTitle>
         </ContextMenuItem>
       </ContextMenuContent>

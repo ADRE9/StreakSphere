@@ -1,6 +1,8 @@
 import 'react-native-get-random-values';
 
 import { observable } from '@legendapp/state';
+import { ObservablePersistMMKV } from '@legendapp/state/persist-plugins/mmkv';
+import { syncObservable } from '@legendapp/state/sync';
 import { v4 as uuidv4 } from 'uuid';
 
 export type Todo = {
@@ -17,6 +19,13 @@ const generateKey = () => {
 
 export const todoState$ = observable({
   todos: {} as TodoRecord,
+});
+
+syncObservable(todoState$, {
+  persist: {
+    name: 'todos',
+    plugin: ObservablePersistMMKV,
+  },
 });
 
 export const addTodo = (label: string) => {

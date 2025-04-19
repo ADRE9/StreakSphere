@@ -10,7 +10,9 @@ const HabitList = observer(() => {
   const habits = use$(habits$);
   if (!habits) return null;
 
-  const habitKeyArray = Object.keys(habits).map((key) => habits[key]);
+  const habitKeyArray = Object.keys(habits)
+    .map((key) => habits[key])
+    .filter((habit) => !habit.deleted);
 
   return (
     <View className="flex-[7]">
