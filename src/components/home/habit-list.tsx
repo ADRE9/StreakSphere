@@ -28,8 +28,6 @@ const HabitList = observer(() => {
             streak_count={item.streak_count}
             color={item.color}
             icon={item.icon}
-            reminder_time={item.reminder_time}
-            reminder_days={item.reminder_days}
             last_checked_in={item.last_checked_in ?? ''}
             deleted={null}
           />

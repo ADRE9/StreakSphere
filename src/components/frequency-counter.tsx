@@ -1,7 +1,7 @@
 import React, { type Dispatch, type SetStateAction } from 'react';
 import { Pressable, Text, View } from 'react-native';
 
-import { type THabitFeature } from './add-habit-form';
+import { type THabitFeature } from './habit-form';
 
 type TFrequencyCounterProps = {
   selectedFrequency: number | null;
@@ -13,8 +13,8 @@ const FrequencyCounter = ({
   setSelectedFrequency,
 }: TFrequencyCounterProps) => {
   return (
-    <View className="my-2 flex-row items-center justify-between">
-      <Text>Times per day</Text>
+    <View className="my-2 flex-row items-center justify-between ">
+      <Text className="dark:text-neutral-500">Times per day</Text>
       <View className="flex-row items-center gap-2">
         <Pressable
           className="size-8 items-center justify-center rounded-full bg-gray-200"
@@ -27,7 +27,7 @@ const FrequencyCounter = ({
         >
           <Text>+</Text>
         </Pressable>
-        <Text>{selectedFrequency}</Text>
+        <Text className="dark:text-neutral-500">{selectedFrequency}</Text>
         <Pressable
           className="size-8 items-center justify-center rounded-full bg-gray-200"
           disabled={selectedFrequency === 1}
