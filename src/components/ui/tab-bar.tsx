@@ -25,12 +25,13 @@ const TabBarData: TabBarItem[] = [
     icon: require('/assets/images/pngs/todo.png'),
     route: 'todo',
   },
-  {
-    key: 'pomodoro',
-    label: 'Timer',
-    icon: require('/assets/images/pngs/community.png'),
-    route: 'pomodoro',
-  },
+  // TODO: Add pomodoro
+  // {
+  //   key: 'pomodoro',
+  //   label: 'Timer',
+  //   icon: require('/assets/images/pngs/community.png'),
+  //   route: 'pomodoro',
+  // },
   {
     key: 'settings',
     label: 'Settings',

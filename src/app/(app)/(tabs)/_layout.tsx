@@ -30,19 +30,20 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="pomodoro"
-        options={{
-          title: 'Pomodoro',
-          tabBarButtonTestID: 'feed-tab',
-        }}
-      />
-      <Tabs.Screen
         name="todo"
         options={{
           title: 'Todo',
           tabBarButtonTestID: 'feed-tab',
         }}
       />
+      {/* TODO: Add pomodoro */}
+      {/* <Tabs.Screen
+        name="pomodoro"
+        options={{
+          title: 'Pomodoro',
+          tabBarButtonTestID: 'feed-tab',
+        }}
+      /> */}
       <Tabs.Screen
         name="settings"
         options={{
