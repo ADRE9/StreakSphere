@@ -17,9 +17,12 @@ import {
   ContextMenuTrigger,
 } from './ui/context-menu';
 
-type Props = Omit<THabit, 'created_at' | 'updated_at' | 'user_id'>;
+type TCardProps = Omit<
+  THabit,
+  'created_at' | 'updated_at' | 'user_id' | 'reminder_days' | 'reminder_time'
+>;
 
-export const Card = ({ title, id, color, icon, description }: Props) => {
+export const Card = ({ title, id, color, icon, description }: TCardProps) => {
   const colorScheme = useColorScheme();
   return (
     <ContextMenuRoot>

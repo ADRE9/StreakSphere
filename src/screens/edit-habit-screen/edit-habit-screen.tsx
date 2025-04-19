@@ -4,6 +4,7 @@ import React from 'react';
 import HabitForm, { type TInitialData } from '@/components/habit-form';
 import { type IconName } from '@/components/icons';
 import { Text, View } from '@/components/ui';
+import { type DaysArray } from '@/types/habit';
 import { habits$ } from '@/utils/supa-legend';
 
 const EditHabitScreen = () => {
@@ -17,15 +18,7 @@ const EditHabitScreen = () => {
       description: habit?.description ?? '',
       icon: habit?.icon as IconName,
       reminder_time: habit?.reminder_time ?? '',
-      reminder_days: (habit?.reminder_days ?? []) as (
-        | 'mon'
-        | 'tue'
-        | 'wed'
-        | 'thu'
-        | 'fri'
-        | 'sat'
-        | 'sun'
-      )[],
+      reminder_days: (habit?.reminder_days ?? []) as DaysArray,
       color: habit?.color,
       streak_count: habit?.streak_count,
     };
