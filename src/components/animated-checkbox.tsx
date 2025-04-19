@@ -103,10 +103,15 @@ const AnimatedCheckBox = memo(({ checked, text, size }: TCheckBoxProps) => {
         }}
       >
         <MotiText
-          // animate={{
-          //   color: checked ? _inactiveColor : _activeColor,
-          // }}
-          style={{ fontSize: size, fontWeight: 'bold', lineHeight: size + 2 }}
+          animate={{
+            opacity: 1,
+          }}
+          style={{
+            fontSize: size,
+            fontWeight: 'bold',
+            lineHeight: size + 2,
+            color: checked ? _inactiveColor : _activeColor,
+          }}
         >
           {text}
         </MotiText>
