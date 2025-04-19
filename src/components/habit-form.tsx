@@ -15,6 +15,7 @@ import { Button, ControlledInput, Text, View } from '@/components/ui';
 import { useAuth } from '@/lib/auth/use-auth';
 import { closeFab } from '@/lib/state/fab-actions';
 import { createHabit, updateHabit } from '@/lib/state/habits-actions';
+import { dateToTimeString } from '@/lib/utils/date-utils';
 import type { HabitWithoutId } from '@/types/habit';
 
 const DEFAULT_REMINDER_DAYS: DayId[] = [
@@ -26,11 +27,11 @@ const DEFAULT_REMINDER_DAYS: DayId[] = [
   'sat',
   'sun',
 ];
+
 // Set default reminder time to 12:00 PM
-const DEFAULT_REMINDER_TIME = setHours(
-  setMinutes(new Date(), 0),
-  12
-).toISOString();
+const DEFAULT_REMINDER_TIME = dateToTimeString(
+  setHours(setMinutes(new Date(), 0), 12)
+);
 
 const schema = z.object({
   title: z.string().min(1, 'Habit name is required'),
@@ -112,8 +113,8 @@ const HabitForm = ({ mode, initialData }: HabitFormProps) => {
       streak_count: selectedHabitFeature.frequency,
       user_id: user!.id,
       deleted: false,
-      reminder_time: mode === 'edit' ? reminderTime : DEFAULT_REMINDER_TIME,
-      reminder_days: mode === 'edit' ? reminderDays : DEFAULT_REMINDER_DAYS,
+      reminder_time: reminderTime,
+      reminder_days: reminderDays,
       last_checked_in: new Date().toISOString(),
       created_at: null,
       updated_at: null,

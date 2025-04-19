@@ -25,12 +25,13 @@ const TabBarData: TabBarItem[] = [
     icon: require('/assets/images/pngs/todo.png'),
     route: 'todo',
   },
-  {
-    key: 'pomodoro',
-    label: 'Timer',
-    icon: require('/assets/images/pngs/community.png'),
-    route: 'pomodoro',
-  },
+  // TODO: Add pomodoro
+  // {
+  //   key: 'pomodoro',
+  //   label: 'Timer',
+  //   icon: require('/assets/images/pngs/community.png'),
+  //   route: 'pomodoro',
+  // },
   {
     key: 'settings',
     label: 'Settings',
@@ -47,7 +48,7 @@ const TabBar = ({ state, navigation }: BottomTabBarProps) => {
         const isActive = state.routes[state.index].name === item.key;
         return (
           <Pressable
-            className="flex-1 items-center justify-center"
+            className="flex-1 items-center justify-center pt-6"
             key={item.key}
             onPress={() => navigation.navigate(item.route)}
           >
@@ -56,7 +57,7 @@ const TabBar = ({ state, navigation }: BottomTabBarProps) => {
                 opacity: isActive ? 1 : 0.9,
               }}
               source={item.icon}
-              className="size-10"
+              className="size-8"
               contentFit="contain"
             />
           </Pressable>
